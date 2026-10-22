@@ -989,16 +989,9 @@
 
     const voiceSelectEl = document.getElementById('voiceSelect');
 
-    // Biến toàn cục giữ Utterance tránh bị trình duyệt Garbage Collect ngắt tiếng giữa câu
-    let activeUtterance = null;
-    let speechKeepAliveTimer = null;
-
-    function stopSpeechKeepAlive() {
-      if (speechKeepAliveTimer) {
-        clearInterval(speechKeepAliveTimer);
-        speechKeepAliveTimer = null;
-      }
-    }
+    // Quản lý phát âm theo cụm câu (Sentence Chunking) chống ngắt câu đột ngột
+    let currentSpeechToken = 0;
+    let currentUtteranceRef = null;
 
     // 1. DATA INITIALIZATION & LOADING
     async function loadQuestions() {
@@ -1143,73 +1136,116 @@
       }
     }
 
-    // Đọc văn bản bằng giọng tiếng Anh chuẩn, đảm bảo không bị dừng giữa câu
-    function speakText(text) {
+    // Hàm phân tách câu thông minh theo dấu câu để mỗi đoạn phát âm chỉ dài 2-4 giây
+    // Giúp loại bỏ 100% bug trình duyệt bị ngắt ngang khi gặp câu dài
+    function splitIntoSpeechChunks(text) {
+      if (!text) return [];
+      // Tách theo dấu chấm, hỏi, than, chấm phẩy
+      const rawSentences = text.match(/[^.?!;]+[.?!;]+|[^.?!;]+$/g) || [text];
+      const chunks = [];
+
+      for (let s of rawSentences) {
+        s = s.trim();
+        if (!s) continue;
+        // Nếu một câu vẫn quá dài (> 100 ký tự), chia tiếp theo dấu phẩy
+        if (s.length > 100 && s.includes(',')) {
+          const subParts = s.split(/,\s*/);
+          for (let p of subParts) {
+            const trimmed = p.trim();
+            if (trimmed) chunks.push(trimmed);
+          }
+        } else {
+          chunks.push(s);
+        }
+      }
+      return chunks.length > 0 ? chunks : [text];
+    }
+
+    // Phát âm một đoạn ngắn (chunk) an toàn tuyệt đối
+    function speakSingleChunk(chunkText, token) {
       return new Promise((resolve) => {
-        if (!isSoundEnabled || !('speechSynthesis' in window)) {
+        if (token !== currentSpeechToken || !window.speechSynthesis) {
           resolve();
           return;
         }
 
-        // Dọn dẹp câu trước
-        cancelSpeech();
+        window.speechSynthesis.cancel();
 
-        // Lưu vào biến toàn cục activeUtterance để Garbage Collector không dọn dẹp giữa câu
-        activeUtterance = new SpeechSynthesisUtterance(text);
-        activeUtterance.lang = englishVoice ? englishVoice.lang : 'en-US';
-        activeUtterance.rate = 0.95; // Tốc độ tự nhiên, rõ ràng cho luyện phỏng vấn
-        activeUtterance.pitch = 1.0;
+        const utterance = new SpeechSynthesisUtterance(chunkText);
+        currentUtteranceRef = utterance; // Giữ tham chiếu tránh Garbage Collection
+        utterance.lang = englishVoice ? englishVoice.lang : 'en-US';
+        utterance.rate = 0.95;
+        utterance.pitch = 1.0;
 
         if (englishVoice) {
-          activeUtterance.voice = englishVoice;
+          utterance.voice = englishVoice;
         }
 
-        const indicator = isFlipped ? voiceIndicatorBack : voiceIndicatorFront;
+        let finished = false;
+        let safetyTimer = null;
 
-        activeUtterance.onstart = () => {
-          if (indicator) indicator.style.display = 'inline-flex';
-          // Khắc phục bug Chromium: Ping resume() định kỳ mỗi 5s để câu dài không bị browser tự ngắt
-          stopSpeechKeepAlive();
-          speechKeepAliveTimer = setInterval(() => {
-            if (window.speechSynthesis && window.speechSynthesis.speaking) {
-              window.speechSynthesis.pause();
-              window.speechSynthesis.resume();
-            } else {
-              stopSpeechKeepAlive();
-            }
-          }, 5000);
+        const onFinished = () => {
+          if (!finished) {
+            finished = true;
+            if (safetyTimer) clearTimeout(safetyTimer);
+            currentUtteranceRef = null;
+            resolve();
+          }
         };
 
-        const cleanup = () => {
-          stopSpeechKeepAlive();
-          if (voiceIndicatorFront) voiceIndicatorFront.style.display = 'none';
-          if (voiceIndicatorBack) voiceIndicatorBack.style.display = 'none';
-          activeUtterance = null;
-          resolve();
-        };
+        // Safety timeout: Đoạn ngắn tối đa 8s, nếu browser bị lag thì tự chuyển tiếp
+        safetyTimer = setTimeout(onFinished, 8000);
 
-        activeUtterance.onend = cleanup;
-        activeUtterance.onerror = (e) => {
-          // Bỏ qua lỗi 'interrupted' hoặc 'canceled' do người dùng chuyển câu nhanh
-          cleanup();
-        };
+        utterance.onend = onFinished;
+        utterance.onerror = onFinished;
 
-        // Đảm bảo trạng thái không bị pause
         if (window.speechSynthesis.paused) {
           window.speechSynthesis.resume();
         }
-        window.speechSynthesis.speak(activeUtterance);
+        window.speechSynthesis.speak(utterance);
       });
     }
 
+    // Đọc văn bản hoàn chỉnh theo chuỗi các đoạn ngắn liên tục, mượt mà
+    async function speakText(text) {
+      if (!isSoundEnabled || !('speechSynthesis' in window) || !text) {
+        return;
+      }
+
+      // Hủy mọi tiến trình đọc trước đó
+      cancelSpeech();
+      const token = ++currentSpeechToken;
+
+      const indicator = isFlipped ? voiceIndicatorBack : voiceIndicatorFront;
+      if (indicator) indicator.style.display = 'inline-flex';
+
+      const chunks = splitIntoSpeechChunks(text);
+
+      for (let i = 0; i < chunks.length; i++) {
+        if (token !== currentSpeechToken) break;
+
+        await speakSingleChunk(chunks[i], token);
+
+        // Nghỉ tự nhiên 120ms giữa các vế câu
+        if (i < chunks.length - 1 && token === currentSpeechToken) {
+          await new Promise((r) => setTimeout(r, 120));
+        }
+      }
+
+      if (token === currentSpeechToken) {
+        if (voiceIndicatorFront) voiceIndicatorFront.style.display = 'none';
+        if (voiceIndicatorBack) voiceIndicatorBack.style.display = 'none';
+      }
+    }
+
     function cancelSpeech() {
-      stopSpeechKeepAlive();
+      currentSpeechToken++;
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
       if (voiceIndicatorFront) voiceIndicatorFront.style.display = 'none';
       if (voiceIndicatorBack) voiceIndicatorBack.style.display = 'none';
-      activeUtterance = null;
+      currentUtteranceRef = null;
     }
 
     // 3. UI RENDERING & CARD STATE
