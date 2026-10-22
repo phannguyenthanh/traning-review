@@ -1136,40 +1136,40 @@
       }
     }
 
-    // Hàm phân tách câu thông minh theo dấu câu để mỗi đoạn phát âm chỉ dài 2-4 giây
-    // Giúp loại bỏ 100% bug trình duyệt bị ngắt ngang khi gặp câu dài
-    function splitIntoSpeechChunks(text) {
-      if (!text) return [];
-      // Tách theo dấu chấm, hỏi, than, chấm phẩy
-      const rawSentences = text.match(/[^.?!;]+[.?!;]+|[^.?!;]+$/g) || [text];
+    // Làm sạch và chuẩn hóa ký tự để Web Speech API phát âm chuẩn xác, không bị vấp
+    function cleanAndSplitSpeechChunks(rawText) {
+      if (!rawText) return [];
+
+      // 1. Chuẩn hóa các ký tự đặc biệt, dấu gạch chéo, từ viết tắt IT
+      let text = rawText
+        .replace(/FID\/INP/gi, 'FID or INP')
+        .replace(/\//g, ' or ')       // Chuyển dấu gạch chéo thành "or" để tránh crash TTS engine
+        .replace(/&/g, ' and ')
+        .replace(/\bvs\b\.?/gi, 'versus')
+        .replace(/[()[\]{}"'“”]/g, ' ') // Xóa các dấu ngoặc gây đứt quãng
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      // 2. Tách theo câu hoàn chỉnh (dấu chấm, chấm hỏi, chấm than)
+      // Câu hỏi ngắn (dưới 150 ký tự) sẽ được đọc liền mạch 1 lần duy nhất để giữ trọn vẹn ngữ điệu
+      const sentences = text.match(/[^.?!]+[.?!]+|[^.?!]+$/g) || [text];
       const chunks = [];
 
-      for (let s of rawSentences) {
-        s = s.trim();
-        if (!s) continue;
-        // Nếu một câu vẫn quá dài (> 100 ký tự), chia tiếp theo dấu phẩy
-        if (s.length > 100 && s.includes(',')) {
-          const subParts = s.split(/,\s*/);
-          for (let p of subParts) {
-            const trimmed = p.trim();
-            if (trimmed) chunks.push(trimmed);
-          }
-        } else {
-          chunks.push(s);
-        }
+      for (let s of sentences) {
+        const trimmed = s.trim();
+        if (trimmed) chunks.push(trimmed);
       }
+
       return chunks.length > 0 ? chunks : [text];
     }
 
-    // Phát âm một đoạn ngắn (chunk) an toàn tuyệt đối
+    // Phát âm một đoạn câu: Tuyệt đối KHÔNG gọi cancel() ở đây để không làm đứt audio queue
     function speakSingleChunk(chunkText, token) {
       return new Promise((resolve) => {
         if (token !== currentSpeechToken || !window.speechSynthesis) {
           resolve();
           return;
         }
-
-        window.speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(chunkText);
         currentUtteranceRef = utterance; // Giữ tham chiếu tránh Garbage Collection
@@ -1181,20 +1181,20 @@
           utterance.voice = englishVoice;
         }
 
-        let finished = false;
+        let isFinished = false;
         let safetyTimer = null;
 
         const onFinished = () => {
-          if (!finished) {
-            finished = true;
+          if (!isFinished) {
+            isFinished = true;
             if (safetyTimer) clearTimeout(safetyTimer);
             currentUtteranceRef = null;
             resolve();
           }
         };
 
-        // Safety timeout: Đoạn ngắn tối đa 8s, nếu browser bị lag thì tự chuyển tiếp
-        safetyTimer = setTimeout(onFinished, 8000);
+        // Safety timeout tối đa 12s cho mỗi câu
+        safetyTimer = setTimeout(onFinished, 12000);
 
         utterance.onend = onFinished;
         utterance.onerror = onFinished;
@@ -1206,29 +1206,29 @@
       });
     }
 
-    // Đọc văn bản hoàn chỉnh theo chuỗi các đoạn ngắn liên tục, mượt mà
+    // Đọc văn bản hoàn chỉnh theo chuỗi các câu liên tục, mượt mà
     async function speakText(text) {
       if (!isSoundEnabled || !('speechSynthesis' in window) || !text) {
         return;
       }
 
-      // Hủy mọi tiến trình đọc trước đó
+      // Hủy mọi câu nói trước đó 1 LẦN DUY NHẤT ở đầu
       cancelSpeech();
       const token = ++currentSpeechToken;
 
       const indicator = isFlipped ? voiceIndicatorBack : voiceIndicatorFront;
       if (indicator) indicator.style.display = 'inline-flex';
 
-      const chunks = splitIntoSpeechChunks(text);
+      const chunks = cleanAndSplitSpeechChunks(text);
 
       for (let i = 0; i < chunks.length; i++) {
         if (token !== currentSpeechToken) break;
 
         await speakSingleChunk(chunks[i], token);
 
-        // Nghỉ tự nhiên 120ms giữa các vế câu
+        // Nghỉ nhẹ 150ms giữa các câu cho tự nhiên
         if (i < chunks.length - 1 && token === currentSpeechToken) {
-          await new Promise((r) => setTimeout(r, 120));
+          await new Promise((r) => setTimeout(r, 150));
         }
       }
 
