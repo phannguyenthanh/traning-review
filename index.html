@@ -202,19 +202,6 @@
       padding: 6px;
     }
 
-    .speed-btn {
-      font-family: var(--font-code);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      width: 42px;
-    }
-
-    .speed-btn:hover {
-      border-color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.1);
-    }
-
     /* MODE SELECTOR & STATUS BAR */
     .sub-bar {
       display: flex;
@@ -698,12 +685,6 @@
           <select id="voiceSelect" class="voice-dropdown" aria-label="Chọn giọng đọc"></select>
         </div>
 
-        <!-- Speech Speed Toggle -->
-        <button id="btnSpeedToggle" class="icon-btn speed-btn" title="Đổi tốc độ đọc: 0.85x - 0.95x - 1.05x"
-          aria-label="Tốc độ đọc">
-          <span id="speedLabel">0.95x</span>
-        </button>
-
         <!-- Replay Voice Button -->
         <button id="btnReplay" class="icon-btn" title="Nghe lại câu hiện tại (Phím R)" aria-label="Replay speech">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1008,24 +989,17 @@
     const btnModeBrowse = document.getElementById('btnModeBrowse');
 
     const voiceSelectEl = document.getElementById('voiceSelect');
-    const btnSpeedToggle = document.getElementById('btnSpeedToggle');
-    const speedLabel = document.getElementById('speedLabel');
 
-    const SPEED_OPTIONS = [0.85, 0.95, 1, 1.05];
-    let currentSpeedIndex = 1; // 0.95x mặc định (tự nhiên nhất cho phỏng vấn)
-    let currentSpeechRate = 0.95;
+    // Biến toàn cục giữ Utterance tránh bị trình duyệt Garbage Collect ngắt tiếng giữa câu
+    let activeUtterance = null;
+    let speechKeepAliveTimer = null;
 
-    // Đọc cài đặt tốc độ đã lưu
-    const savedSpeed = localStorage.getItem('devflash_speech_rate');
-    if (savedSpeed) {
-      const parsedSpeed = parseFloat(savedSpeed);
-      const foundIdx = SPEED_OPTIONS.indexOf(parsedSpeed);
-      if (foundIdx !== -1) {
-        currentSpeedIndex = foundIdx;
-        currentSpeechRate = parsedSpeed;
+    function stopSpeechKeepAlive() {
+      if (speechKeepAliveTimer) {
+        clearInterval(speechKeepAliveTimer);
+        speechKeepAliveTimer = null;
       }
     }
-    if (speedLabel) speedLabel.textContent = currentSpeechRate + 'x';
 
     // 1. DATA INITIALIZATION & LOADING
     async function loadQuestions() {
@@ -1168,24 +1142,9 @@
           }
         });
       }
-
-      // Xử lý đổi tốc độ đọc
-      if (btnSpeedToggle) {
-        btnSpeedToggle.addEventListener('click', () => {
-          currentSpeedIndex = (currentSpeedIndex + 1) % SPEED_OPTIONS.length;
-          currentSpeechRate = SPEED_OPTIONS[currentSpeedIndex];
-          speedLabel.textContent = currentSpeechRate + 'x';
-          localStorage.setItem('devflash_speech_rate', currentSpeechRate);
-          // Đọc lại với tốc độ mới
-          if (activeDeck && activeDeck[currentIndex]) {
-            const textToSpeak = isFlipped ? activeDeck[currentIndex].a : activeDeck[currentIndex].q;
-            speakText(textToSpeak);
-          }
-        });
-      }
     }
 
-    // Đọc văn bản bằng giọng tiếng Anh chuẩn, tự nhiên với Promise khi kết thúc
+    // Đọc văn bản bằng giọng tiếng Anh chuẩn, đảm bảo không bị dừng giữa câu
     function speakText(text) {
       return new Promise((resolve) => {
         if (!isSoundEnabled || !('speechSynthesis' in window)) {
@@ -1193,42 +1152,65 @@
           return;
         }
 
-        window.speechSynthesis.cancel(); // Hủy mọi lời nói trước đó
+        // Dọn dẹp câu trước
+        cancelSpeech();
 
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = englishVoice ? englishVoice.lang : 'en-US';
-        utterance.rate = currentSpeechRate; // Tốc độ người dùng chọn (mặc định 0.95x)
-        utterance.pitch = 1.0;
+        // Lưu vào biến toàn cục activeUtterance để Garbage Collector không dọn dẹp giữa câu
+        activeUtterance = new SpeechSynthesisUtterance(text);
+        activeUtterance.lang = englishVoice ? englishVoice.lang : 'en-US';
+        activeUtterance.rate = 0.95; // Tốc độ tự nhiên, rõ ràng cho luyện phỏng vấn
+        activeUtterance.pitch = 1.0;
 
         if (englishVoice) {
-          utterance.voice = englishVoice;
+          activeUtterance.voice = englishVoice;
         }
 
         const indicator = isFlipped ? voiceIndicatorBack : voiceIndicatorFront;
 
-        utterance.onstart = () => {
+        activeUtterance.onstart = () => {
           if (indicator) indicator.style.display = 'inline-flex';
+          // Khắc phục bug Chromium: Ping resume() định kỳ mỗi 5s để câu dài không bị browser tự ngắt
+          stopSpeechKeepAlive();
+          speechKeepAliveTimer = setInterval(() => {
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+              window.speechSynthesis.pause();
+              window.speechSynthesis.resume();
+            } else {
+              stopSpeechKeepAlive();
+            }
+          }, 5000);
         };
 
-        const onEndOrError = () => {
+        const cleanup = () => {
+          stopSpeechKeepAlive();
           if (voiceIndicatorFront) voiceIndicatorFront.style.display = 'none';
           if (voiceIndicatorBack) voiceIndicatorBack.style.display = 'none';
+          activeUtterance = null;
           resolve();
         };
 
-        utterance.onend = onEndOrError;
-        utterance.onerror = onEndOrError;
+        activeUtterance.onend = cleanup;
+        activeUtterance.onerror = (e) => {
+          // Bỏ qua lỗi 'interrupted' hoặc 'canceled' do người dùng chuyển câu nhanh
+          cleanup();
+        };
 
-        window.speechSynthesis.speak(utterance);
+        // Đảm bảo trạng thái không bị pause
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+        window.speechSynthesis.speak(activeUtterance);
       });
     }
 
     function cancelSpeech() {
+      stopSpeechKeepAlive();
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
       if (voiceIndicatorFront) voiceIndicatorFront.style.display = 'none';
       if (voiceIndicatorBack) voiceIndicatorBack.style.display = 'none';
+      activeUtterance = null;
     }
 
     // 3. UI RENDERING & CARD STATE
