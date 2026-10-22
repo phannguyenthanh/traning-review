@@ -202,6 +202,97 @@
       padding: 6px;
     }
 
+    /* DECK / CATEGORY SELECTOR */
+    .deck-bar {
+      margin: 14px 0 4px;
+    }
+
+    .deck-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .deck-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 9px 12px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: var(--font-ui);
+      user-select: none;
+    }
+
+    .deck-tab:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    .deck-tab.active {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.25), rgba(79, 70, 229, 0.3));
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.25);
+    }
+
+    .deck-tab-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+      display: inline-block;
+    }
+
+    .deck-tab-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .deck-tab-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .deck-tab-count {
+      font-family: var(--font-code);
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      padding: 2px 7px;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.2s ease;
+    }
+
+    .deck-tab.active .deck-tab-count {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--accent-cyan);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    @media (max-width: 480px) {
+      .deck-tab {
+        padding: 8px 6px;
+        gap: 6px;
+      }
+      .deck-tab-name {
+        font-size: 0.76rem;
+      }
+    }
+
     /* MODE SELECTOR & STATUS BAR */
     .sub-bar {
       display: flex;
@@ -422,6 +513,37 @@
       font-size: 0.8rem;
       line-height: 1.45;
       color: #94a3b8;
+      font-style: normal;
+    }
+
+    /* HINT / USAGE CONTEXT BOX (Dành cho tình huống ngoại lệ) */
+    .hint-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-left: 3px solid var(--accent-amber);
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .hint-header {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-code);
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 3px;
+      color: var(--accent-amber);
+    }
+
+    .hint-text {
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: #fde68a;
       font-style: normal;
     }
 
@@ -711,6 +833,26 @@
       </div>
     </header>
 
+    <!-- DECK / CATEGORY SELECTOR -->
+    <div class="deck-bar">
+      <div class="deck-tabs" role="tablist" aria-label="Chọn nhóm câu hỏi">
+        <button id="btnDeckMes" class="deck-tab active" data-deck="mes" role="tab" aria-selected="true" title="15 câu phỏng vấn chuyên môn MES / Factory IT">
+          <span class="deck-tab-icon">🏭</span>
+          <span class="deck-tab-info">
+            <span class="deck-tab-name">Phỏng vấn MES</span>
+            <span class="deck-tab-count" id="badgeMes">15 câu</span>
+          </span>
+        </button>
+        <button id="btnDeckException" class="deck-tab" data-deck="exception" role="tab" aria-selected="false" title="5 câu xử lý tình huống khẩn cấp / xin giải thích lại">
+          <span class="deck-tab-icon">⚡</span>
+          <span class="deck-tab-info">
+            <span class="deck-tab-name">Tình huống ngoại lệ</span>
+            <span class="deck-tab-count" id="badgeException">5 câu</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
     <!-- SUB BAR (MODE SELECTOR & COUNTER) -->
     <div class="sub-bar">
       <div class="mode-pills">
@@ -777,6 +919,13 @@
                 <span>🌐 Dịch:</span>
               </div>
               <p id="answerTranslation" class="translation-text">Đang tải bản dịch...</p>
+            </div>
+            <!-- Hướng dẫn / Ngữ cảnh sử dụng (dành cho nhóm câu ngoại lệ) -->
+            <div id="hintBox" class="hint-box" style="display: none;">
+              <div class="hint-header">
+                <span>💡 Ngữ cảnh sử dụng:</span>
+              </div>
+              <p id="answerHint" class="hint-text"></p>
             </div>
           </div>
           <div class="card-footer">
@@ -876,8 +1025,8 @@
      * Built with Vanilla JavaScript
      */
 
-    // Dữ liệu dự phòng (Fallback) phỏng vấn Kỹ sư MES / Hệ thống công nghiệp
-    const FALLBACK_QUESTIONS = [
+    // Dữ liệu dự phòng nhóm 1: Phỏng vấn Kỹ sư MES / Hệ thống công nghiệp (questions.json)
+    const FALLBACK_MES_QUESTIONS = [
       {
         "q": "Can you introduce yourself and highlight your core technical skills?",
         "q_vn": "Bạn có thể giới thiệu bản thân và nêu bật các kỹ năng kỹ thuật cốt lõi không?",
@@ -970,7 +1119,67 @@
       }
     ];
 
+    // Dữ liệu dự phòng nhóm 2: Tình huống / Ngoại lệ (exception.json)
+    const FALLBACK_EXCEPTION_QUESTIONS = [
+      {
+        "q": "Could you please rephrase or explain that question?",
+        "q_vn": "Anh/chị có thể diễn đạt lại hoặc giải thích giúp tôi câu hỏi được không?",
+        "a": "Could you please rephrase or explain that question?",
+        "a_vn": "Anh/chị có thể diễn đạt lại hoặc giải thích giúp tôi câu hỏi được không?",
+        "hint": "Dùng khi không hiểu ý người phỏng vấn và muốn họ giải thích lại bằng tiếng Anh."
+      },
+      {
+        "q": "Sorry, I didn't quite catch that. Could you repeat it slowly?",
+        "q_vn": "Xin lỗi, tôi nghe chưa rõ. Anh/chị nói lại chậm hơn chút được không?",
+        "a": "Sorry, I didn't quite catch that. Could you repeat it slowly?",
+        "a_vn": "Xin lỗi, tôi nghe chưa rõ. Anh/chị nói lại chậm hơn chút được không?",
+        "hint": "Dùng khi đối phương nói quá nhanh hoặc bị rào âm thanh xưởng/mạng lag."
+      },
+      {
+        "q": "May I answer this technical question in Vietnamese to explain it more clearly?",
+        "q_vn": "Tôi có thể trả lời câu hỏi kỹ thuật này bằng tiếng Việt để giải thích rõ ràng hơn được không?",
+        "a": "May I answer this technical question in Vietnamese to explain it more clearly?",
+        "a_vn": "Tôi có thể trả lời câu hỏi kỹ thuật này bằng tiếng Việt để giải thích rõ ràng hơn được không?",
+        "hint": "Xin phép trả lời thuật ngữ chuyên môn phức tạp bằng tiếng Việt."
+      },
+      {
+        "q": "Could you explain this part in Vietnamese so I can make sure I understand correctly?",
+        "q_vn": "Anh/chị có thể giải thích phần này bằng tiếng Việt để tôi đảm bảo mình hiểu đúng không?",
+        "a": "Could you explain this part in Vietnamese so I can make sure I understand correctly?",
+        "a_vn": "Anh/chị có thể giải thích phần này bằng tiếng Việt để tôi đảm bảo mình hiểu đúng không?",
+        "hint": "Xin người phỏng vấn giải thích câu hỏi bằng tiếng Việt khi sợ hiểu sai ý."
+      },
+      {
+        "q": "Just to clarify, are you asking about...?",
+        "q_vn": "Để làm rõ hơn, có phải anh/chị đang hỏi về... đúng không?",
+        "a": "Just to clarify, are you asking about...?",
+        "a_vn": "Để làm rõ hơn, có phải anh/chị đang hỏi về... đúng không?",
+        "hint": "Dùng để xác nhận lại trọng tâm câu hỏi trước khi trả lời."
+      }
+    ];
+
+    // Cấu hình các nhóm thẻ (Decks)
+    const DECKS_CONFIG = {
+      mes: {
+        id: 'mes',
+        name: 'Phỏng vấn MES',
+        icon: '🏭',
+        file: './questions.json',
+        fallback: FALLBACK_MES_QUESTIONS
+      },
+      exception: {
+        id: 'exception',
+        name: 'Tình huống ngoại lệ',
+        icon: '⚡',
+        file: './exception.json',
+        fallback: FALLBACK_EXCEPTION_QUESTIONS
+      }
+    };
+
     // State Variables
+    let currentDeckId = localStorage.getItem('devflash_current_deck') || 'mes';
+    if (!DECKS_CONFIG[currentDeckId]) currentDeckId = 'mes';
+
     let rawQuestions = [];
     let activeDeck = [];
     let currentIndex = 0;
@@ -982,11 +1191,18 @@
     let currentMode = 'practice'; // 'practice' | 'browse'
 
     // DOM Elements
+    const btnDeckMes = document.getElementById('btnDeckMes');
+    const btnDeckException = document.getElementById('btnDeckException');
+    const badgeMes = document.getElementById('badgeMes');
+    const badgeException = document.getElementById('badgeException');
+
     const flashcardEl = document.getElementById('flashcard');
     const questionTextEl = document.getElementById('questionText');
     const questionTranslationEl = document.getElementById('questionTranslation');
     const answerTextEl = document.getElementById('answerText');
     const answerTranslationEl = document.getElementById('answerTranslation');
+    const hintBoxEl = document.getElementById('hintBox');
+    const answerHintEl = document.getElementById('answerHint');
 
     const questionNumEl = document.getElementById('questionNum');
     const currentIdxTextEl = document.getElementById('currentIdxText');
@@ -1024,23 +1240,48 @@
     let currentUtteranceRef = null;
 
     // 1. DATA INITIALIZATION & LOADING
-    async function loadQuestions() {
+    async function switchDeck(deckId) {
+      if (!DECKS_CONFIG[deckId]) return;
+      currentDeckId = deckId;
+      localStorage.setItem('devflash_current_deck', deckId);
+
+      // Cập nhật trạng thái active của các tab deck
+      btnDeckMes.classList.toggle('active', deckId === 'mes');
+      btnDeckException.classList.toggle('active', deckId === 'exception');
+      btnDeckMes.setAttribute('aria-selected', deckId === 'mes');
+      btnDeckException.setAttribute('aria-selected', deckId === 'exception');
+
+      if (isAutoplayRunning) stopAutoplay();
+      cancelSpeech();
+
+      await loadDeckQuestions(deckId);
+    }
+
+    async function loadDeckQuestions(deckId) {
+      const config = DECKS_CONFIG[deckId];
       try {
-        const response = await fetch('./questions.json');
+        const response = await fetch(config.file);
         if (!response.ok) throw new Error('HTTP error ' + response.status);
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
           rawQuestions = data;
         } else {
-          rawQuestions = FALLBACK_QUESTIONS;
+          rawQuestions = config.fallback;
         }
       } catch (err) {
         // Fallback tự động khi mở offline / file:// protocol
-        console.warn('Load questions.json failed or blocked by CORS (running on file://), using fallback data.', err);
-        rawQuestions = FALLBACK_QUESTIONS;
+        console.warn(`Load ${config.file} failed or CORS on file://, using fallback data.`, err);
+        rawQuestions = config.fallback;
       }
 
-      // Khởi tạo deck ban đầu
+      // Cập nhật số lượng hiển thị trên badge của deck
+      if (deckId === 'mes' && badgeMes) {
+        badgeMes.textContent = `${rawQuestions.length} câu`;
+      } else if (deckId === 'exception' && badgeException) {
+        badgeException.textContent = `${rawQuestions.length} câu`;
+      }
+
+      // Khởi tạo activeDeck theo chế độ đang chọn (luyện tập hay thứ tự)
       if (currentMode === 'practice') {
         activeDeck = shuffleArray([...rawQuestions]);
       } else {
@@ -1325,6 +1566,15 @@
       answerTextEl.textContent = item.a;
       answerTranslationEl.textContent = item.a_vn || 'Chưa có bản dịch cho câu trả lời này';
 
+      // Hiển thị gợi ý ngữ cảnh sử dụng (đặc biệt cho nhóm tình huống ngoại lệ)
+      if (item.hint && hintBoxEl && answerHintEl) {
+        hintBoxEl.style.display = 'block';
+        answerHintEl.textContent = item.hint;
+      } else if (hintBoxEl) {
+        hintBoxEl.style.display = 'none';
+        if (answerHintEl) answerHintEl.textContent = '';
+      }
+
       // Update progress bar
       const progressPercent = ((currentIndex + 1) / activeDeck.length) * 100;
       progressFillEl.style.width = progressPercent + '%';
@@ -1558,6 +1808,19 @@
       renderCurrentCard();
     });
 
+    // Deck Selector Event Listeners
+    if (btnDeckMes) {
+      btnDeckMes.addEventListener('click', () => {
+        if (currentDeckId !== 'mes') switchDeck('mes');
+      });
+    }
+
+    if (btnDeckException) {
+      btnDeckException.addEventListener('click', () => {
+        if (currentDeckId !== 'exception') switchDeck('exception');
+      });
+    }
+
     // Keyboard Shortcuts: F1 là Prev, F2 là Lật thẻ, F3 là Next (vẫn hỗ trợ thêm phím Space và mũi tên)
     window.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -1589,7 +1852,7 @@
 
     // Launch Application
     initSpeechSynthesis();
-    loadQuestions();
+    switchDeck(currentDeckId);
   </script>
 </body>
 

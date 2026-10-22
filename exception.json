@@ -1,0 +1,37 @@
+[
+    {
+        "q": "Could you please rephrase or explain that question?",
+        "q_vn": "Anh/chị có thể diễn đạt lại hoặc giải thích giúp tôi câu hỏi được không?",
+        "a": "Could you please rephrase or explain that question?",
+        "a_vn": "Anh/chị có thể diễn đạt lại hoặc giải thích giúp tôi câu hỏi được không?",
+        "hint": "Dùng khi không hiểu ý người phỏng vấn và muốn họ giải thích lại bằng tiếng Anh."
+    },
+    {
+        "q": "Sorry, I didn't quite catch that. Could you repeat it slowly?",
+        "q_vn": "Xin lỗi, tôi nghe chưa rõ. Anh/chị nói lại chậm hơn chút được không?",
+        "a": "Sorry, I didn't quite catch that. Could you repeat it slowly?",
+        "a_vn": "Xin lỗi, tôi nghe chưa rõ. Anh/chị nói lại chậm hơn chút được không?",
+        "hint": "Dùng khi đối phương nói quá nhanh hoặc bị rào âm thanh xưởng/mạng lag."
+    },
+    {
+        "q": "May I answer this technical question in Vietnamese to explain it more clearly?",
+        "q_vn": "Tôi có thể trả lời câu hỏi kỹ thuật này bằng tiếng Việt để giải thích rõ ràng hơn được không?",
+        "a": "May I answer this technical question in Vietnamese to explain it more clearly?",
+        "a_vn": "Tôi có thể trả lời câu hỏi kỹ thuật này bằng tiếng Việt để giải thích rõ ràng hơn được không?",
+        "hint": "Xin phép trả lời thuật ngữ chuyên môn phức tạp bằng tiếng Việt."
+    },
+    {
+        "q": "Could you explain this part in Vietnamese so I can make sure I understand correctly?",
+        "q_vn": "Anh/chị có thể giải thích phần này bằng tiếng Việt để tôi đảm bảo mình hiểu đúng không?",
+        "a": "Could you explain this part in Vietnamese so I can make sure I understand correctly?",
+        "a_vn": "Anh/chị có thể giải thích phần này bằng tiếng Việt để tôi đảm bảo mình hiểu đúng không?",
+        "hint": "Xin người phỏng vấn giải thích câu hỏi bằng tiếng Việt khi sợ hiểu sai ý."
+    },
+    {
+        "q": "Just to clarify, are you asking about...?",
+        "q_vn": "Để làm rõ hơn, có phải anh/chị đang hỏi về... đúng không?",
+        "a": "Just to clarify, are you asking about...?",
+        "a_vn": "Để làm rõ hơn, có phải anh/chị đang hỏi về... đúng không?",
+        "hint": "Dùng để xác nhận lại trọng tâm câu hỏi trước khi trả lời."
+    }
+]

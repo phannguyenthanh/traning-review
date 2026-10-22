@@ -1,8 +1,9 @@
-const CACHE_NAME = 'devflash-v6';
+const CACHE_NAME = 'devflash-v7';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './questions.json',
+  './exception.json',
   './manifest.json',
   './icon.svg'
 ];
