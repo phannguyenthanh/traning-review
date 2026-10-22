@@ -865,8 +865,7 @@
       </div>
 
       <div class="shortcuts-hint">
-        Phím tắt: <span class="kbd">Space</span> Lật thẻ &nbsp;|&nbsp; <span class="kbd">←</span> <span
-          class="kbd">→</span> Đổi câu &nbsp;|&nbsp; <span class="kbd">R</span> Nghe lại
+        Phím tắt: <span class="kbd">F1</span> Câu trước &nbsp;|&nbsp; <span class="kbd">F2</span> Lật thẻ &nbsp;|&nbsp; <span class="kbd">F3</span> Câu sau &nbsp;|&nbsp; <span class="kbd">R</span> Nghe lại
       </div>
     </footer>
   </div>
@@ -1448,19 +1447,19 @@
       renderCurrentCard();
     });
 
-    // Keyboard Shortcuts
+    // Keyboard Shortcuts: F1 là Prev, F2 là Lật thẻ, F3 là Next (vẫn hỗ trợ thêm phím Space và mũi tên)
     window.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-      if (e.code === 'Space') {
-        e.preventDefault();
-        toggleFlip();
-      } else if (e.code === 'ArrowRight') {
-        e.preventDefault();
-        goToNextCard();
-      } else if (e.code === 'ArrowLeft') {
+      if (e.key === 'F1' || e.code === 'F1' || e.code === 'ArrowLeft') {
         e.preventDefault();
         goToPrevCard();
+      } else if (e.key === 'F2' || e.code === 'F2' || e.code === 'Space') {
+        e.preventDefault();
+        toggleFlip();
+      } else if (e.key === 'F3' || e.code === 'F3' || e.code === 'ArrowRight') {
+        e.preventDefault();
+        goToNextCard();
       } else if (e.key === 'r' || e.key === 'R') {
         e.preventDefault();
         const textToSpeak = isFlipped ? activeDeck[currentIndex].a : activeDeck[currentIndex].q;
