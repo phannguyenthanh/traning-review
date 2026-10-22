@@ -1,4 +1,4 @@
-const CACHE_NAME = 'devflash-v5';
+const CACHE_NAME = 'devflash-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

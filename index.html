@@ -1377,7 +1377,7 @@
     }
 
     // 4. CHẾ ĐỘ LÁI XE (DRIVING / AUTO-PLAY MODE)
-    // Vòng lặp: Random trước -> Hiện & Đọc Q -> Dừng 2s -> Lật & Đọc A -> Dừng 3s -> Next
+    // Vòng lặp: Hiện & Đọc Q -> Dừng 2s -> Lật & Đọc A -> Dừng 3s -> Next
     async function startAutoplay() {
       isAutoplayRunning = true;
       btnAutoplay.classList.add('running');
@@ -1386,9 +1386,17 @@
       autoplayIconStop.style.display = 'inline-block';
       autoplayBanner.classList.add('show');
 
-      // Yêu cầu: "đầu tiên randome câu chạy xong mới bắt đầu chạy"
-      activeDeck = shuffleArray([...rawQuestions]);
-      currentIndex = 0;
+      if (currentMode === 'browse') {
+        // Tab Thứ tự: giữ nguyên 100% thứ tự file JSON
+        activeDeck = [...rawQuestions];
+        if (currentIndex >= activeDeck.length) {
+          currentIndex = 0;
+        }
+      } else {
+        // Tab Luyện tập: xáo trộn ngẫu nhiên và chạy từ câu đầu tiên
+        activeDeck = shuffleArray([...rawQuestions]);
+        currentIndex = 0;
+      }
 
       runAutoplayCycle();
     }
@@ -1452,9 +1460,15 @@
       if (currentIndex < activeDeck.length - 1) {
         currentIndex++;
       } else {
-        // Hết vòng lặp, tự động xáo trộn lại và tiếp tục
-        activeDeck = shuffleArray([...rawQuestions]);
-        currentIndex = 0;
+        if (currentMode === 'browse') {
+          // Tab Thứ tự: quay lại câu đầu tiên theo đúng thứ tự file JSON
+          activeDeck = [...rawQuestions];
+          currentIndex = 0;
+        } else {
+          // Tab Luyện tập: xáo trộn ngẫu nhiên đợt mới
+          activeDeck = shuffleArray([...rawQuestions]);
+          currentIndex = 0;
+        }
       }
 
       runAutoplayCycle();
