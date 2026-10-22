@@ -1,0 +1,42 @@
+[
+  {
+    "q": "What is the Virtual DOM and how does React use it to optimize rendering?",
+    "a": "A lightweight JavaScript representation of the real DOM. React uses reconciliation and diffing algorithms to batch and update only modified nodes."
+  },
+  {
+    "q": "Explain the difference between synchronous and asynchronous JavaScript.",
+    "a": "Synchronous code executes sequentially and blocks execution. Asynchronous code runs via the Event Loop (Promises, async/await, Web APIs) without blocking the main thread."
+  },
+  {
+    "q": "What is a Closure in JavaScript and what is a practical use case?",
+    "a": "A function bundled with references to its lexical scope. Used for data privacy, currying, memoization, and maintaining state in factory functions."
+  },
+  {
+    "q": "How does CSS Flexbox differ from CSS Grid?",
+    "a": "Flexbox is one-dimensional (content-first, rows OR columns). Grid is two-dimensional (layout-first, rows AND columns simultaneously)."
+  },
+  {
+    "q": "What is the purpose of the HTTP status code 401 vs 403?",
+    "a": "401 Unauthorized means unauthenticated (identity unknown). 403 Forbidden means authenticated but lacking permissions to access the resource."
+  },
+  {
+    "q": "What are Web Vitals and why are LCP, FID/INP, and CLS important?",
+    "a": "Google metrics for user experience. LCP measures loading speed, INP measures interactivity responsiveness, CLS measures visual stability."
+  },
+  {
+    "q": "Explain the concept of Event Bubbling and Event Capturing.",
+    "a": "Capturing travels down from Window to the target element. Bubbling travels up from target to Window. event.stopPropagation() halts traversal."
+  },
+  {
+    "q": "What is the difference between SQL and NoSQL databases?",
+    "a": "SQL databases are relational, structured with rigid schemas and ACID compliance. NoSQL databases are non-relational, schema-flexible, and horizontally scalable."
+  },
+  {
+    "q": "What is Memoization and when should you use it in frontend apps?",
+    "a": "Caching function results based on inputs. Useful for expensive calculations or preventing unnecessary re-renders in component trees."
+  },
+  {
+    "q": "How does HTTPS secure communication between client and server?",
+    "a": "Using TLS/SSL encryption with public-private key cryptography for handshake and symmetric keys for data transmission, ensuring privacy and integrity."
+  }
+]

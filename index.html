@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DevFlash • English IT Interview</title>
+  
+  <!-- PWA & Mobile Optimization Meta Tags -->
+  <meta name="description" content="Luyện phỏng vấn tiếng Anh IT qua Flashcard và phát âm tự động">
+  <meta name="theme-color" content="#090d16">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DevFlash">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS RESET & VARIABLES */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% 10%, #151d30 0%, #080c14 70%, #04060a 100%);
+      --card-front-bg: linear-gradient(145deg, #131b2e, #0e1422);
+      --card-back-bg: linear-gradient(145deg, #101c2a, #0c1626);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(56, 189, 248, 0.35);
+      --accent-cyan: #38bdf8;
+      --accent-indigo: #6366f1;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-code: 'Fira Code', monospace;
+      --radius-card: 24px;
+      --radius-btn: 14px;
+      --shadow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 35px -5px rgba(56, 189, 248, 0.12);
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* APP CONTAINER */
+    .app-container {
+      max-width: 680px;
+      margin: 0 auto;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 16px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284c7, #4f46e5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .brand-icon svg {
+      width: 20px;
+      height: 20px;
+      color: #fff;
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text span {
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      font-family: var(--font-code);
+      font-weight: 500;
+      display: block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .icon-btn.active {
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    /* MODE SELECTOR & STATUS BAR */
+    .sub-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 14px 0 10px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mode-pills {
+      display: inline-flex;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .pill-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-ui);
+    }
+
+    .pill-btn.active {
+      background: linear-gradient(135deg, #0284c7, #4f46e5);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.35);
+    }
+
+    .counter-badge {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .counter-badge strong {
+      color: var(--accent-cyan);
+    }
+
+    /* PROGRESS INDICATOR */
+    .progress-bar-container {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      transition: width 0.3s ease;
+    }
+
+    /* CARD SCENE & 3D FLIP */
+    .card-scene {
+      perspective: 1200px;
+      flex: 1;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 8px 0 16px;
+    }
+
+    .flashcard {
+      width: 100%;
+      height: 100%;
+      min-height: 330px;
+      max-height: 440px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-card);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      transition: border-color 0.3s ease;
+    }
+
+    .card-face:hover {
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    /* FRONT FACE (QUESTION) */
+    .card-front {
+      background: var(--card-front-bg);
+    }
+
+    /* BACK FACE (ANSWER) */
+    .card-back {
+      background: var(--card-back-bg);
+      transform: rotateY(180deg);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-code);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 99px;
+      width: fit-content;
+    }
+
+    .card-front .card-tag {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .card-back .card-tag {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .card-content {
+      margin: auto 0;
+      padding: 12px 0;
+    }
+
+    .card-front .question-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .card-back .answer-text {
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .card-hint {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .voice-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--accent-cyan);
+      font-family: var(--font-code);
+      font-size: 0.7rem;
+    }
+
+    .speaking-pulse {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      animation: pulseAnim 1.2s infinite ease-in-out;
+    }
+
+    @keyframes pulseAnim {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.6); opacity: 1; }
+    }
+
+    /* CONTROLS AREA */
+    .controls-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* PRIMARY ACTIONS */
+    .nav-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 14px 16px;
+      border: none;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: var(--font-ui);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-flip {
+      background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.35);
+    }
+
+    .btn-flip:hover {
+      box-shadow: 0 6px 24px rgba(2, 132, 199, 0.5);
+      filter: brightness(1.1);
+    }
+
+    /* AUTO PLAY & EXTRA CONTROLS */
+    .secondary-controls {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-autoplay {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+    }
+
+    .btn-autoplay:hover {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .btn-autoplay.running {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.5);
+      color: #fda4af;
+      animation: alertPulse 1.8s infinite;
+    }
+
+    @keyframes alertPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(244, 63, 94, 0); }
+      50% { box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
+    }
+
+    .btn-shuffle {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-shuffle:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* AUTOPLAY STATUS BANNER */
+    .autoplay-banner {
+      display: none;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--accent-cyan);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .autoplay-banner.show {
+      display: flex;
+    }
+
+    .autoplay-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .autoplay-step-text {
+      color: var(--accent-cyan);
+      font-weight: 600;
+      font-family: var(--font-code);
+    }
+
+    /* SHORTCUTS / HINT BAR */
+    .shortcuts-hint {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 6px;
+      font-family: var(--font-code);
+    }
+
+    .kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: var(--text-muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .app-container {
+        padding: 12px 14px 18px;
+      }
+      .card-front .question-text {
+        font-size: 1.15rem;
+      }
+      .card-back .answer-text {
+        font-size: 1rem;
+      }
+      .btn {
+        padding: 12px 10px;
+        font-size: 0.82rem;
+      }
+      .shortcuts-hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- TOP HEADER -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>DevFlash</h1>
+          <span>English IT Interview</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Replay Voice Button -->
+        <button id="btnReplay" class="icon-btn" title="Nghe lại câu hiện tại" aria-label="Replay speech">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Mute/Unmute Toggle -->
+        <button id="btnSoundToggle" class="icon-btn active" title="Bật/Tắt âm thanh" aria-label="Toggle sound">
+          <svg id="iconSoundOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="iconSoundOff" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- SUB BAR (MODE SELECTOR & COUNTER) -->
+    <div class="sub-bar">
+      <div class="mode-pills">
+        <button id="btnModePractice" class="pill-btn active">🎯 Luyện tập</button>
+        <button id="btnModeBrowse" class="pill-btn">📚 Thứ tự</button>
+      </div>
+      <div class="counter-badge">
+        Thẻ <strong id="currentIdxText">1</strong> / <span id="totalCardsText">10</span>
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-container">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
+
+    <!-- FLASHCARD CONTAINER -->
+    <main class="card-scene">
+      <div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="Flashcard - Nhấp để lật">
+        
+        <!-- FRONT FACE: QUESTION -->
+        <div class="card-face card-front">
+          <div>
+            <div class="card-tag">
+              <span>●</span> Question #<span id="questionNum">1</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p id="questionText" class="question-text">Loading question...</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              Nhấp thẻ hoặc phím Space để xem đáp án
+            </span>
+            <span id="voiceIndicator" class="voice-badge" style="display: none;">
+              <span class="speaking-pulse"></span> Speaking
+            </span>
+          </div>
+        </div>
+
+        <!-- BACK FACE: KEYWORDS ANSWER -->
+        <div class="card-face card-back">
+          <div>
+            <div class="card-tag">
+              <span>✓</span> Key Answer
+            </div>
+          </div>
+          <div class="card-content">
+            <p id="answerText" class="answer-text">Loading answer...</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"></path><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              Nhấp để quay lại câu hỏi
+            </span>
+            <span id="voiceIndicatorBack" class="voice-badge" style="display: none;">
+              <span class="speaking-pulse"></span> Speaking
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- AUTOPLAY NOTIFICATION BANNER -->
+    <div id="autoplayBanner" class="autoplay-banner">
+      <div class="autoplay-step">
+        <span class="speaking-pulse"></span>
+        <span id="autoplayStatusText">Chế độ tự động đang chạy...</span>
+      </div>
+      <span class="autoplay-step-text" id="autoplayCountdown">Next in 3s</span>
+    </div>
+
+    <!-- CONTROLS -->
+    <footer class="controls-wrapper">
+      <!-- Main Action Buttons -->
+      <div class="nav-buttons">
+        <button id="btnPrev" class="btn btn-secondary" title="Câu trước">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Trước
+        </button>
+
+        <button id="btnFlip" class="btn btn-flip" title="Lật thẻ">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <span id="flipBtnText">Lật thẻ</span>
+        </button>
+
+        <button id="btnNext" class="btn btn-secondary" title="Câu tiếp theo">
+          Sau
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Secondary Buttons (Driving Autoplay & Random Shuffle) -->
+      <div class="secondary-controls">
+        <button id="btnAutoplay" class="btn btn-autoplay" title="Chế độ nghe rảnh tay lái xe">
+          <svg id="autoplayIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <svg id="autoplayIconStop" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>
+          <span id="autoplayBtnLabel">🚗 Nghe tự động</span>
+        </button>
+
+        <button id="btnShuffle" class="btn btn-shuffle" title="Trộn ngẫu nhiên câu hỏi">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+          Trộn ngẫu nhiên
+        </button>
+      </div>
+
+      <div class="shortcuts-hint">
+        Phím tắt: <span class="kbd">Space</span> Lật thẻ &nbsp;|&nbsp; <span class="kbd">←</span> <span class="kbd">→</span> Đổi câu &nbsp;|&nbsp; <span class="kbd">R</span> Nghe lại
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /**
+     * DevFlash Core Application
+     * Built with Vanilla JavaScript
+     */
+
+    // Dữ liệu dự phòng (Fallback) khi mở offline trực tiếp file:// không có HTTP Server
+    const FALLBACK_QUESTIONS = [
+      {
+        "q": "What is the Virtual DOM and how does React use it to optimize rendering?",
+        "a": "A lightweight JavaScript representation of the real DOM. React uses reconciliation and diffing algorithms to batch and update only modified nodes."
+      },
+      {
+        "q": "Explain the difference between synchronous and asynchronous JavaScript.",
+        "a": "Synchronous code executes sequentially and blocks execution. Asynchronous code runs via the Event Loop (Promises, async/await, Web APIs) without blocking the main thread."
+      },
+      {
+        "q": "What is a Closure in JavaScript and what is a practical use case?",
+        "a": "A function bundled with references to its lexical scope. Used for data privacy, currying, memoization, and maintaining state in factory functions."
+      },
+      {
+        "q": "How does CSS Flexbox differ from CSS Grid?",
+        "a": "Flexbox is one-dimensional (content-first, rows OR columns). Grid is two-dimensional (layout-first, rows AND columns simultaneously)."
+      },
+      {
+        "q": "What is the purpose of the HTTP status code 401 vs 403?",
+        "a": "401 Unauthorized means unauthenticated (identity unknown). 403 Forbidden means authenticated but lacking permissions to access the resource."
+      },
+      {
+        "q": "What are Web Vitals and why are LCP, FID/INP, and CLS important?",
+        "a": "Google metrics for user experience. LCP measures loading speed, INP measures interactivity responsiveness, CLS measures visual stability."
+      },
+      {
+        "q": "Explain the concept of Event Bubbling and Event Capturing.",
+        "a": "Capturing travels down from Window to the target element. Bubbling travels up from target to Window. event.stopPropagation() halts traversal."
+      },
+      {
+        "q": "What is the difference between SQL and NoSQL databases?",
+        "a": "SQL databases are relational, structured with rigid schemas and ACID compliance. NoSQL databases are non-relational, schema-flexible, and horizontally scalable."
+      },
+      {
+        "q": "What is Memoization and when should you use it in frontend apps?",
+        "a": "Caching function results based on inputs. Useful for expensive calculations or preventing unnecessary re-renders in component trees."
+      },
+      {
+        "q": "How does HTTPS secure communication between client and server?",
+        "a": "Using TLS/SSL encryption with public-private key cryptography for handshake and symmetric keys for data transmission, ensuring privacy and integrity."
+      }
+    ];
+
+    // State Variables
+    let rawQuestions = [];
+    let activeDeck = [];
+    let currentIndex = 0;
+    let isFlipped = false;
+    let isSoundEnabled = true;
+    let isAutoplayRunning = false;
+    let autoplayTimer = null;
+    let englishVoice = null;
+    let currentMode = 'practice'; // 'practice' | 'browse'
+
+    // DOM Elements
+    const flashcardEl = document.getElementById('flashcard');
+    const questionTextEl = document.getElementById('questionText');
+    const answerTextEl = document.getElementById('answerText');
+    const questionNumEl = document.getElementById('questionNum');
+    const currentIdxTextEl = document.getElementById('currentIdxText');
+    const totalCardsTextEl = document.getElementById('totalCardsText');
+    const progressFillEl = document.getElementById('progressFill');
+    const flipBtnTextEl = document.getElementById('flipBtnText');
+
+    const voiceIndicatorFront = document.getElementById('voiceIndicator');
+    const voiceIndicatorBack = document.getElementById('voiceIndicatorBack');
+
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnFlip = document.getElementById('btnFlip');
+    const btnShuffle = document.getElementById('btnShuffle');
+    const btnAutoplay = document.getElementById('btnAutoplay');
+    const autoplayBtnLabel = document.getElementById('autoplayBtnLabel');
+    const autoplayIconPlay = document.getElementById('autoplayIconPlay');
+    const autoplayIconStop = document.getElementById('autoplayIconStop');
+    const autoplayBanner = document.getElementById('autoplayBanner');
+    const autoplayStatusText = document.getElementById('autoplayStatusText');
+    const autoplayCountdown = document.getElementById('autoplayCountdown');
+
+    const btnSoundToggle = document.getElementById('btnSoundToggle');
+    const iconSoundOn = document.getElementById('iconSoundOn');
+    const iconSoundOff = document.getElementById('iconSoundOff');
+    const btnReplay = document.getElementById('btnReplay');
+
+    const btnModePractice = document.getElementById('btnModePractice');
+    const btnModeBrowse = document.getElementById('btnModeBrowse');
+
+    // 1. DATA INITIALIZATION & LOADING
+    async function loadQuestions() {
+      try {
+        const response = await fetch('./questions.json');
+        if (!response.ok) throw new Error('HTTP error ' + response.status);
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          rawQuestions = data;
+        } else {
+          rawQuestions = FALLBACK_QUESTIONS;
+        }
+      } catch (err) {
+        // Fallback tự động khi mở offline / file:// protocol
+        console.warn('Load questions.json failed or blocked by CORS (running on file://), using fallback data.', err);
+        rawQuestions = FALLBACK_QUESTIONS;
+      }
+
+      // Khởi tạo deck ban đầu
+      if (currentMode === 'practice') {
+        activeDeck = shuffleArray([...rawQuestions]);
+      } else {
+        activeDeck = [...rawQuestions];
+      }
+
+      currentIndex = 0;
+      totalCardsTextEl.textContent = activeDeck.length;
+      renderCurrentCard();
+    }
+
+    // Helper: Shuffle Array (Fisher-Yates)
+    function shuffleArray(arr) {
+      const array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // 2. SPEECH SYNTHESIS ENGINE (Web Speech API)
+    function initSpeechSynthesis() {
+      if (!('speechSynthesis' in window)) {
+        console.warn('Speech synthesis not supported by browser.');
+        return;
+      }
+
+      function selectVoice() {
+        const voices = window.speechSynthesis.getVoices();
+        if (!voices || voices.length === 0) return;
+
+        // Ưu tiên các giọng tiếng Anh tự nhiên chất lượng cao hoặc local
+        englishVoice = voices.find(v => (v.lang === 'en-US' || v.lang === 'en-GB') && (v.localService || v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Siri')))
+                    || voices.find(v => v.lang.startsWith('en'))
+                    || voices[0];
+      }
+
+      selectVoice();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = selectVoice;
+      }
+    }
+
+    // Đọc văn bản bằng giọng tiếng Anh với Promise khi kết thúc
+    function speakText(text) {
+      return new Promise((resolve) => {
+        if (!isSoundEnabled || !('speechSynthesis' in window)) {
+          resolve();
+          return;
+        }
+
+        window.speechSynthesis.cancel(); // Hủy mọi lời nói trước đó
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.95; // Tốc độ tự nhiên, rõ ràng cho luyện phỏng vấn
+        utterance.pitch = 1.0;
+
+        if (englishVoice) {
+          utterance.voice = englishVoice;
+        }
+
+        const indicator = isFlipped ? voiceIndicatorBack : voiceIndicatorFront;
+        
+        utterance.onstart = () => {
+          if (indicator) indicator.style.display = 'inline-flex';
+        };
+
+        const onEndOrError = () => {
+          if (voiceIndicatorFront) voiceIndicatorFront.style.display = 'none';
+          if (voiceIndicatorBack) voiceIndicatorBack.style.display = 'none';
+          resolve();
+        };
+
+        utterance.onend = onEndOrError;
+        utterance.onerror = onEndOrError;
+
+        window.speechSynthesis.speak(utterance);
+      });
+    }
+
+    function cancelSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      if (voiceIndicatorFront) voiceIndicatorFront.style.display = 'none';
+      if (voiceIndicatorBack) voiceIndicatorBack.style.display = 'none';
+    }
+
+    // 3. UI RENDERING & CARD STATE
+    function renderCurrentCard(autoSpeak = true) {
+      if (!activeDeck || activeDeck.length === 0) return;
+
+      const item = activeDeck[currentIndex];
+      questionNumEl.textContent = currentIndex + 1;
+      currentIdxTextEl.textContent = currentIndex + 1;
+      questionTextEl.textContent = item.q;
+      answerTextEl.textContent = item.a;
+
+      // Update progress bar
+      const progressPercent = ((currentIndex + 1) / activeDeck.length) * 100;
+      progressFillEl.style.width = progressPercent + '%';
+
+      // Reset card về mặt trước (câu hỏi)
+      setCardFlipState(false);
+
+      // Đọc câu hỏi nếu bật âm thanh
+      if (autoSpeak && !isAutoplayRunning) {
+        speakText(item.q);
+      }
+    }
+
+    function setCardFlipState(flipToBack, shouldSpeakAnswer = true) {
+      isFlipped = flipToBack;
+      if (isFlipped) {
+        flashcardEl.classList.add('flipped');
+        flipBtnTextEl.textContent = 'Hiện câu hỏi';
+        if (shouldSpeakAnswer && !isAutoplayRunning) {
+          speakText(activeDeck[currentIndex].a);
+        }
+      } else {
+        flashcardEl.classList.remove('flipped');
+        flipBtnTextEl.textContent = 'Lật thẻ';
+      }
+    }
+
+    function toggleFlip() {
+      setCardFlipState(!isFlipped, true);
+    }
+
+    function goToNextCard() {
+      cancelSpeech();
+      if (currentIndex < activeDeck.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0; // Vòng lặp lại từ đầu
+      }
+      renderCurrentCard();
+    }
+
+    function goToPrevCard() {
+      cancelSpeech();
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = activeDeck.length - 1;
+      }
+      renderCurrentCard();
+    }
+
+    // 4. CHẾ ĐỘ LÁI XE (DRIVING / AUTO-PLAY MODE)
+    // Vòng lặp: Random trước -> Hiện & Đọc Q -> Dừng 2s -> Lật & Đọc A -> Dừng 3s -> Next
+    async function startAutoplay() {
+      isAutoplayRunning = true;
+      btnAutoplay.classList.add('running');
+      autoplayBtnLabel.textContent = 'Dừng tự động';
+      autoplayIconPlay.style.display = 'none';
+      autoplayIconStop.style.display = 'inline-block';
+      autoplayBanner.classList.add('show');
+
+      // Yêu cầu: "đầu tiên randome câu chạy xong mới bắt đầu chạy"
+      activeDeck = shuffleArray([...rawQuestions]);
+      currentIndex = 0;
+
+      runAutoplayCycle();
+    }
+
+    function stopAutoplay() {
+      isAutoplayRunning = false;
+      if (autoplayTimer) {
+        clearTimeout(autoplayTimer);
+        autoplayTimer = null;
+      }
+      cancelSpeech();
+      btnAutoplay.classList.remove('running');
+      autoplayBtnLabel.textContent = '🚗 Nghe tự động';
+      autoplayIconPlay.style.display = 'inline-block';
+      autoplayIconStop.style.display = 'none';
+      autoplayBanner.classList.remove('show');
+    }
+
+    function waitMs(ms) {
+      return new Promise(resolve => {
+        autoplayTimer = setTimeout(resolve, ms);
+      });
+    }
+
+    async function runAutoplayCycle() {
+      if (!isAutoplayRunning) return;
+
+      const item = activeDeck[currentIndex];
+      renderCurrentCard(false);
+
+      // Bước 1: Hiện câu hỏi và đọc câu hỏi
+      autoplayStatusText.textContent = `Đang đọc câu hỏi (${currentIndex + 1}/${activeDeck.length})`;
+      autoplayCountdown.textContent = 'Reading Q';
+      await speakText(item.q);
+      if (!isAutoplayRunning) return;
+
+      // Bước 2: Dừng 2 giây
+      autoplayStatusText.textContent = 'Dừng 2 giây suy nghĩ...';
+      for (let sec = 2; sec > 0; sec--) {
+        autoplayCountdown.textContent = `Pause ${sec}s`;
+        await waitMs(1000);
+        if (!isAutoplayRunning) return;
+      }
+
+      // Bước 3: Hiện và đọc câu trả lời
+      setCardFlipState(true, false);
+      autoplayStatusText.textContent = 'Đang đọc câu trả lời...';
+      autoplayCountdown.textContent = 'Reading A';
+      await speakText(item.a);
+      if (!isAutoplayRunning) return;
+
+      // Bước 4: Dừng 3 giây
+      autoplayStatusText.textContent = 'Dừng 3 giây trước câu tiếp theo...';
+      for (let sec = 3; sec > 0; sec--) {
+        autoplayCountdown.textContent = `Next in ${sec}s`;
+        await waitMs(1000);
+        if (!isAutoplayRunning) return;
+      }
+
+      // Bước 5: Chuyển câu tiếp theo và lặp lại
+      if (currentIndex < activeDeck.length - 1) {
+        currentIndex++;
+      } else {
+        // Hết vòng lặp, tự động xáo trộn lại và tiếp tục
+        activeDeck = shuffleArray([...rawQuestions]);
+        currentIndex = 0;
+      }
+
+      runAutoplayCycle();
+    }
+
+    // 5. EVENT LISTENERS & SHORTCUTS
+    flashcardEl.addEventListener('click', () => {
+      if (isAutoplayRunning) {
+        stopAutoplay();
+      }
+      toggleFlip();
+    });
+
+    btnFlip.addEventListener('click', () => {
+      if (isAutoplayRunning) stopAutoplay();
+      toggleFlip();
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (isAutoplayRunning) stopAutoplay();
+      goToNextCard();
+    });
+
+    btnPrev.addEventListener('click', () => {
+      if (isAutoplayRunning) stopAutoplay();
+      goToPrevCard();
+    });
+
+    btnShuffle.addEventListener('click', () => {
+      if (isAutoplayRunning) stopAutoplay();
+      activeDeck = shuffleArray([...activeDeck]);
+      currentIndex = 0;
+      renderCurrentCard();
+    });
+
+    btnAutoplay.addEventListener('click', () => {
+      if (isAutoplayRunning) {
+        stopAutoplay();
+      } else {
+        startAutoplay();
+      }
+    });
+
+    // Sound Mute Toggle
+    btnSoundToggle.addEventListener('click', () => {
+      isSoundEnabled = !isSoundEnabled;
+      if (isSoundEnabled) {
+        btnSoundToggle.classList.add('active');
+        iconSoundOn.style.display = 'block';
+        iconSoundOff.style.display = 'none';
+        speakText(isFlipped ? activeDeck[currentIndex].a : activeDeck[currentIndex].q);
+      } else {
+        btnSoundToggle.classList.remove('active');
+        iconSoundOn.style.display = 'none';
+        iconSoundOff.style.display = 'block';
+        cancelSpeech();
+      }
+    });
+
+    // Replay Current Speech
+    btnReplay.addEventListener('click', () => {
+      if (isAutoplayRunning) stopAutoplay();
+      const textToSpeak = isFlipped ? activeDeck[currentIndex].a : activeDeck[currentIndex].q;
+      speakText(textToSpeak);
+    });
+
+    // Switch Modes (Practice vs Browse)
+    btnModePractice.addEventListener('click', () => {
+      if (currentMode === 'practice') return;
+      currentMode = 'practice';
+      btnModePractice.classList.add('active');
+      btnModeBrowse.classList.remove('active');
+      if (isAutoplayRunning) stopAutoplay();
+      activeDeck = shuffleArray([...rawQuestions]);
+      currentIndex = 0;
+      renderCurrentCard();
+    });
+
+    btnModeBrowse.addEventListener('click', () => {
+      if (currentMode === 'browse') return;
+      currentMode = 'browse';
+      btnModeBrowse.classList.add('active');
+      btnModePractice.classList.remove('active');
+      if (isAutoplayRunning) stopAutoplay();
+      activeDeck = [...rawQuestions];
+      currentIndex = 0;
+      renderCurrentCard();
+    });
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        toggleFlip();
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        goToNextCard();
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        goToPrevCard();
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        const textToSpeak = isFlipped ? activeDeck[currentIndex].a : activeDeck[currentIndex].q;
+        speakText(textToSpeak);
+      }
+    });
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('PWA ServiceWorker registered with scope:', reg.scope))
+          .catch(err => console.log('ServiceWorker registration failed (safe on file:// protocol):', err));
+      });
+    }
+
+    // Launch Application
+    initSpeechSynthesis();
+    loadQuestions();
+  </script>
+</body>
+</html>
