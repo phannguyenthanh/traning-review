@@ -229,7 +229,7 @@
     .card-scene {
       perspective: 1200px;
       flex: 1;
-      min-height: 320px;
+      min-height: 340px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -239,8 +239,8 @@
     .flashcard {
       width: 100%;
       height: 100%;
-      min-height: 330px;
-      max-height: 440px;
+      min-height: 350px;
+      max-height: 480px;
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -261,7 +261,7 @@
       border-radius: var(--radius-card);
       border: 1px solid var(--border-color);
       box-shadow: var(--shadow-card);
-      padding: 28px 24px;
+      padding: 26px 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -313,11 +313,14 @@
 
     .card-content {
       margin: auto 0;
-      padding: 12px 0;
+      padding: 10px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .card-front .question-text {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 700;
       line-height: 1.5;
       color: #ffffff;
@@ -325,10 +328,54 @@
     }
 
     .card-back .answer-text {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 500;
       line-height: 1.6;
       color: #e2e8f0;
+    }
+
+    /* TRANSLATION BOX (BẢN DỊCH TIẾNG VIỆT) */
+    .translation-box {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px dashed rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      padding: 12px 14px;
+      transition: all 0.2s ease;
+    }
+
+    .card-front .translation-box {
+      border-left: 3px solid var(--accent-cyan);
+    }
+
+    .card-back .translation-box {
+      border-left: 3px solid var(--accent-emerald);
+    }
+
+    .translation-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-code);
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .card-front .translation-header {
+      color: var(--accent-cyan);
+    }
+
+    .card-back .translation-header {
+      color: var(--accent-emerald);
+    }
+
+    .translation-text {
+      font-size: 0.94rem;
+      line-height: 1.55;
+      color: #cbd5e1;
+      font-style: normal;
     }
 
     .card-footer {
@@ -524,6 +571,9 @@
       .card-back .answer-text {
         font-size: 1rem;
       }
+      .translation-text {
+        font-size: 0.88rem;
+      }
       .btn {
         padding: 12px 10px;
         font-size: 0.82rem;
@@ -554,7 +604,7 @@
 
       <div class="header-actions">
         <!-- Replay Voice Button -->
-        <button id="btnReplay" class="icon-btn" title="Nghe lại câu hiện tại" aria-label="Replay speech">
+        <button id="btnReplay" class="icon-btn" title="Nghe lại câu hiện tại (Phím R)" aria-label="Replay speech">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -605,6 +655,13 @@
           </div>
           <div class="card-content">
             <p id="questionText" class="question-text">Loading question...</p>
+            <!-- Bản dịch câu hỏi -->
+            <div class="translation-box">
+              <div class="translation-header">
+                <span>🌐 Dịch câu hỏi:</span>
+              </div>
+              <p id="questionTranslation" class="translation-text">Đang tải bản dịch...</p>
+            </div>
           </div>
           <div class="card-footer">
             <span class="card-hint">
@@ -626,6 +683,13 @@
           </div>
           <div class="card-content">
             <p id="answerText" class="answer-text">Loading answer...</p>
+            <!-- Bản dịch câu trả lời -->
+            <div class="translation-box">
+              <div class="translation-header">
+                <span>🌐 Giải nghĩa tiếng Việt:</span>
+              </div>
+              <p id="answerTranslation" class="translation-text">Đang tải giải nghĩa...</p>
+            </div>
           </div>
           <div class="card-footer">
             <span class="card-hint">
@@ -696,47 +760,67 @@
      * Built with Vanilla JavaScript
      */
 
-    // Dữ liệu dự phòng (Fallback) khi mở offline trực tiếp file:// không có HTTP Server
+    // Dữ liệu dự phòng (Fallback) đầy đủ bản dịch khi mở offline trực tiếp file:// không có HTTP Server
     const FALLBACK_QUESTIONS = [
       {
         "q": "What is the Virtual DOM and how does React use it to optimize rendering?",
-        "a": "A lightweight JavaScript representation of the real DOM. React uses reconciliation and diffing algorithms to batch and update only modified nodes."
+        "q_vn": "Virtual DOM là gì và React sử dụng nó như thế nào để tối ưu hoá việc render?",
+        "a": "A lightweight JavaScript representation of the real DOM. React uses reconciliation and diffing algorithms to batch and update only modified nodes.",
+        "a_vn": "Bản sao JavaScript rút gọn của DOM thật. React dùng thuật toán reconciliation và diffing để gom nhóm và chỉ cập nhật những node bị thay đổi."
       },
       {
         "q": "Explain the difference between synchronous and asynchronous JavaScript.",
-        "a": "Synchronous code executes sequentially and blocks execution. Asynchronous code runs via the Event Loop (Promises, async/await, Web APIs) without blocking the main thread."
+        "q_vn": "Giải thích sự khác biệt giữa xử lý đồng bộ (synchronous) và bất đồng bộ (asynchronous) trong JavaScript.",
+        "a": "Synchronous code executes sequentially and blocks execution. Asynchronous code runs via the Event Loop (Promises, async/await, Web APIs) without blocking the main thread.",
+        "a_vn": "Mã đồng bộ chạy tuần tự từng dòng và chặn luồng thực thi. Mã bất đồng bộ chạy qua Event Loop (Promises, async/await, Web APIs) mà không làm tắc nghẽn luồng chính."
       },
       {
         "q": "What is a Closure in JavaScript and what is a practical use case?",
-        "a": "A function bundled with references to its lexical scope. Used for data privacy, currying, memoization, and maintaining state in factory functions."
+        "q_vn": "Closure trong JavaScript là gì và hãy nêu một trường hợp ứng dụng thực tế?",
+        "a": "A function bundled with references to its lexical scope. Used for data privacy, currying, memoization, and maintaining state in factory functions.",
+        "a_vn": "Một hàm đi kèm với tham chiếu đến phạm vi từ vựng (lexical scope) của nó. Dùng để tạo biến private, currying, memoization và lưu giữ trạng thái trong factory functions."
       },
       {
         "q": "How does CSS Flexbox differ from CSS Grid?",
-        "a": "Flexbox is one-dimensional (content-first, rows OR columns). Grid is two-dimensional (layout-first, rows AND columns simultaneously)."
+        "q_vn": "CSS Flexbox khác biệt như thế nào so với CSS Grid?",
+        "a": "Flexbox is one-dimensional (content-first, rows OR columns). Grid is two-dimensional (layout-first, rows AND columns simultaneously).",
+        "a_vn": "Flexbox là một chiều (dựa theo nội dung, sắp xếp theo hàng HOẶC cột). Grid là hai chiều (dựa theo khung layout, điều khiển cả hàng VÀ cột cùng lúc)."
       },
       {
         "q": "What is the purpose of the HTTP status code 401 vs 403?",
-        "a": "401 Unauthorized means unauthenticated (identity unknown). 403 Forbidden means authenticated but lacking permissions to access the resource."
+        "q_vn": "Ý nghĩa và sự khác nhau giữa mã trạng thái HTTP 401 và 403 là gì?",
+        "a": "401 Unauthorized means unauthenticated (identity unknown). 403 Forbidden means authenticated but lacking permissions to access the resource.",
+        "a_vn": "401 Unauthorized nghĩa là chưa xác thực danh tính (chưa đăng nhập). 403 Forbidden nghĩa là đã xác thực nhưng không đủ quyền truy cập tài nguyên."
       },
       {
         "q": "What are Web Vitals and why are LCP, FID/INP, and CLS important?",
-        "a": "Google metrics for user experience. LCP measures loading speed, INP measures interactivity responsiveness, CLS measures visual stability."
+        "q_vn": "Web Vitals là gì và tại sao các chỉ số LCP, FID/INP và CLS lại quan trọng?",
+        "a": "Google metrics for user experience. LCP measures loading speed, INP measures interactivity responsiveness, CLS measures visual stability.",
+        "a_vn": "Bộ chỉ số của Google đo lường trải nghiệm người dùng. LCP đo tốc độ tải trang, INP đo độ phản hồi tương tác, CLS đo độ ổn định thị giác (tránh giật cục layout)."
       },
       {
         "q": "Explain the concept of Event Bubbling and Event Capturing.",
-        "a": "Capturing travels down from Window to the target element. Bubbling travels up from target to Window. event.stopPropagation() halts traversal."
+        "q_vn": "Giải thích khái niệm Event Bubbling (nổi bọt) và Event Capturing (bắt sự kiện).",
+        "a": "Capturing travels down from Window to the target element. Bubbling travels up from target to Window. event.stopPropagation() halts traversal.",
+        "a_vn": "Capturing truyền sự kiện từ Window đi xuống element mục tiêu. Bubbling lan tỏa ngược từ element mục tiêu lên Window. event.stopPropagation() sẽ dừng việc lan tỏa."
       },
       {
         "q": "What is the difference between SQL and NoSQL databases?",
-        "a": "SQL databases are relational, structured with rigid schemas and ACID compliance. NoSQL databases are non-relational, schema-flexible, and horizontally scalable."
+        "q_vn": "Sự khác biệt giữa cơ sở dữ liệu SQL (quan hệ) và NoSQL (phi quan hệ) là gì?",
+        "a": "SQL databases are relational, structured with rigid schemas and ACID compliance. NoSQL databases are non-relational, schema-flexible, and horizontally scalable.",
+        "a_vn": "SQL là cơ sở dữ liệu có cấu trúc quan hệ, lược đồ chặt chẽ và tuân thủ ACID. NoSQL là phi quan hệ, cấu trúc linh hoạt và dễ dàng mở rộng theo chiều ngang."
       },
       {
         "q": "What is Memoization and when should you use it in frontend apps?",
-        "a": "Caching function results based on inputs. Useful for expensive calculations or preventing unnecessary re-renders in component trees."
+        "q_vn": "Memoization là gì và khi nào nên áp dụng nó trong ứng dụng Frontend?",
+        "a": "Caching function results based on inputs. Useful for expensive calculations or preventing unnecessary re-renders in component trees.",
+        "a_vn": "Kỹ thuật lưu trữ tạm kết quả của hàm dựa trên tham số đầu vào. Hữu ích cho các phép tính toán tốn kém hoặc ngăn chặn component con bị re-render không cần thiết."
       },
       {
         "q": "How does HTTPS secure communication between client and server?",
-        "a": "Using TLS/SSL encryption with public-private key cryptography for handshake and symmetric keys for data transmission, ensuring privacy and integrity."
+        "q_vn": "Giao thức HTTPS bảo mật đường truyền giữa client và server như thế nào?",
+        "a": "Using TLS/SSL encryption with public-private key cryptography for handshake and symmetric keys for data transmission, ensuring privacy and integrity.",
+        "a_vn": "Sử dụng mã hóa TLS/SSL với khóa bất đối xứng (public/private key) cho bước bắt tay (handshake) và khóa đối xứng để truyền dữ liệu, đảm bảo tính riêng tư và toàn vẹn."
       }
     ];
 
@@ -754,7 +838,10 @@
     // DOM Elements
     const flashcardEl = document.getElementById('flashcard');
     const questionTextEl = document.getElementById('questionText');
+    const questionTranslationEl = document.getElementById('questionTranslation');
     const answerTextEl = document.getElementById('answerText');
+    const answerTranslationEl = document.getElementById('answerTranslation');
+
     const questionNumEl = document.getElementById('questionNum');
     const currentIdxTextEl = document.getElementById('currentIdxText');
     const totalCardsTextEl = document.getElementById('totalCardsText');
@@ -846,7 +933,7 @@
       }
     }
 
-    // Đọc văn bản bằng giọng tiếng Anh với Promise khi kết thúc
+    // Đọc văn bản bằng giọng tiếng Anh với Promise khi kết thúc (chỉ đọc tiếng Anh chuẩn)
     function speakText(text) {
       return new Promise((resolve) => {
         if (!isSoundEnabled || !('speechSynthesis' in window)) {
@@ -899,8 +986,14 @@
       const item = activeDeck[currentIndex];
       questionNumEl.textContent = currentIndex + 1;
       currentIdxTextEl.textContent = currentIndex + 1;
+      
+      // Hiển thị câu hỏi tiếng Anh và bản dịch tiếng Việt
       questionTextEl.textContent = item.q;
+      questionTranslationEl.textContent = item.q_vn || 'Chưa có bản dịch cho câu hỏi này';
+
+      // Hiển thị câu trả lời tiếng Anh và bản dịch tiếng Việt
       answerTextEl.textContent = item.a;
+      answerTranslationEl.textContent = item.a_vn || 'Chưa có giải nghĩa cho câu trả lời này';
 
       // Update progress bar
       const progressPercent = ((currentIndex + 1) / activeDeck.length) * 100;
