@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DevFlash • English IT Interview</title>
-  
+
   <!-- PWA & Mobile Optimization Meta Tags -->
   <meta name="description" content="Luyện phỏng vấn tiếng Anh IT qua Flashcard và phát âm tự động">
   <meta name="theme-color" content="#090d16">
@@ -19,11 +20,15 @@
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <style>
     /* CSS RESET & VARIABLES */
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -171,7 +176,8 @@
       color: var(--text-muted);
     }
 
-    .voice-picker-container:hover, .voice-picker-container:focus-within {
+    .voice-picker-container:hover,
+    .voice-picker-container:focus-within {
       border-color: rgba(56, 189, 248, 0.4);
       background: rgba(255, 255, 255, 0.08);
       color: var(--accent-cyan);
@@ -467,8 +473,17 @@
     }
 
     @keyframes pulseAnim {
-      0%, 100% { transform: scale(1); opacity: 0.5; }
-      50% { transform: scale(1.6); opacity: 1; }
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: scale(1.6);
+        opacity: 1;
+      }
     }
 
     /* CONTROLS AREA */
@@ -553,8 +568,15 @@
     }
 
     @keyframes alertPulse {
-      0%, 100% { box-shadow: 0 0 0 rgba(244, 63, 94, 0); }
-      50% { box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 rgba(244, 63, 94, 0);
+      }
+
+      50% {
+        box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+      }
     }
 
     .btn-shuffle {
@@ -619,25 +641,31 @@
       .app-container {
         padding: 12px 14px 18px;
       }
+
       .card-front .question-text {
         font-size: 1.15rem;
       }
+
       .card-back .answer-text {
         font-size: 1rem;
       }
+
       .translation-text {
         font-size: 0.75rem;
       }
+
       .btn {
         padding: 12px 10px;
         font-size: 0.82rem;
       }
+
       .shortcuts-hint {
         display: none;
       }
     }
   </style>
 </head>
+
 <body>
 
   <div class="app-container">
@@ -645,7 +673,8 @@
     <header>
       <div class="brand">
         <div class="brand-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+            stroke-linejoin="round">
             <polyline points="16 18 22 12 16 6"></polyline>
             <polyline points="8 6 2 12 8 18"></polyline>
           </svg>
@@ -659,7 +688,8 @@
       <div class="header-actions">
         <!-- Voice Selector Dropdown (Smart Voice Ranking) -->
         <div class="voice-picker-container" title="Chọn giọng đọc tiếng Anh hay nhất trên máy">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
             <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
             <line x1="12" y1="19" x2="12" y2="23"></line>
@@ -669,13 +699,15 @@
         </div>
 
         <!-- Speech Speed Toggle -->
-        <button id="btnSpeedToggle" class="icon-btn speed-btn" title="Đổi tốc độ đọc: 0.85x - 0.95x - 1.05x" aria-label="Tốc độ đọc">
+        <button id="btnSpeedToggle" class="icon-btn speed-btn" title="Đổi tốc độ đọc: 0.85x - 0.95x - 1.05x"
+          aria-label="Tốc độ đọc">
           <span id="speedLabel">0.95x</span>
         </button>
 
         <!-- Replay Voice Button -->
         <button id="btnReplay" class="icon-btn" title="Nghe lại câu hiện tại (Phím R)" aria-label="Replay speech">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
@@ -683,11 +715,13 @@
 
         <!-- Mute/Unmute Toggle -->
         <button id="btnSoundToggle" class="icon-btn active" title="Bật/Tắt âm thanh" aria-label="Toggle sound">
-          <svg id="iconSoundOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg id="iconSoundOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
-          <svg id="iconSoundOff" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg id="iconSoundOff" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <line x1="23" y1="9" x2="17" y2="15"></line>
             <line x1="17" y1="9" x2="23" y2="15"></line>
@@ -715,7 +749,7 @@
     <!-- FLASHCARD CONTAINER -->
     <main class="card-scene">
       <div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="Flashcard - Nhấp để lật">
-        
+
         <!-- FRONT FACE: QUESTION -->
         <div class="card-face card-front">
           <div>
@@ -735,7 +769,10 @@
           </div>
           <div class="card-footer">
             <span class="card-hint">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 14 14"></polyline>
+              </svg>
               Nhấp thẻ hoặc phím Space để xem đáp án
             </span>
             <span id="voiceIndicator" class="voice-badge" style="display: none;">
@@ -763,7 +800,10 @@
           </div>
           <div class="card-footer">
             <span class="card-hint">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"></path><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 4v6h6"></path>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
               Nhấp để quay lại câu hỏi
             </span>
             <span id="voiceIndicatorBack" class="voice-badge" style="display: none;">
@@ -789,37 +829,63 @@
       <!-- Main Action Buttons -->
       <div class="nav-buttons">
         <button id="btnPrev" class="btn btn-secondary" title="Câu trước">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
           Trước
         </button>
 
         <button id="btnFlip" class="btn btn-flip" title="Lật thẻ">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+            </path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
           <span id="flipBtnText">Lật thẻ</span>
         </button>
 
         <button id="btnNext" class="btn btn-secondary" title="Câu tiếp theo">
           Sau
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
 
       <!-- Secondary Buttons (Driving Autoplay & Random Shuffle) -->
       <div class="secondary-controls">
         <button id="btnAutoplay" class="btn btn-autoplay" title="Chế độ nghe rảnh tay lái xe">
-          <svg id="autoplayIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          <svg id="autoplayIconStop" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>
+          <svg id="autoplayIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <svg id="autoplayIconStop" style="display:none;" width="18" height="18" viewBox="0 0 24 24"
+            fill="currentColor">
+            <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+          </svg>
           <span id="autoplayBtnLabel">🚗 Nghe tự động</span>
         </button>
 
         <button id="btnShuffle" class="btn btn-shuffle" title="Trộn ngẫu nhiên câu hỏi">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 3 21 3 21 8"></polyline>
+            <line x1="4" y1="20" x2="21" y2="3"></line>
+            <polyline points="21 16 21 21 16 21"></polyline>
+            <line x1="15" y1="15" x2="21" y2="21"></line>
+            <line x1="4" y1="4" x2="9" y2="9"></line>
+          </svg>
           Trộn ngẫu nhiên
         </button>
       </div>
 
       <div class="shortcuts-hint">
-        Phím tắt: <span class="kbd">Space</span> Lật thẻ &nbsp;|&nbsp; <span class="kbd">←</span> <span class="kbd">→</span> Đổi câu &nbsp;|&nbsp; <span class="kbd">R</span> Nghe lại
+        Phím tắt: <span class="kbd">Space</span> Lật thẻ &nbsp;|&nbsp; <span class="kbd">←</span> <span
+          class="kbd">→</span> Đổi câu &nbsp;|&nbsp; <span class="kbd">R</span> Nghe lại
       </div>
     </footer>
   </div>
@@ -945,7 +1011,7 @@
     const btnSpeedToggle = document.getElementById('btnSpeedToggle');
     const speedLabel = document.getElementById('speedLabel');
 
-    const SPEED_OPTIONS = [0.85, 0.95, 1.05];
+    const SPEED_OPTIONS = [0.85, 0.95, 1, 1.05];
     let currentSpeedIndex = 1; // 0.95x mặc định (tự nhiên nhất cho phỏng vấn)
     let currentSpeechRate = 0.95;
 
@@ -1054,7 +1120,7 @@
         englishVoices.forEach((v) => {
           const option = document.createElement('option');
           option.value = v.name;
-          
+
           // Gắn nhãn icon đẹp mắt cho giọng AI/Natural
           let label = v.name.replace(/Microsoft |Google /g, '');
           if (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Enhanced') || v.name.includes('Neural')) {
@@ -1139,7 +1205,7 @@
         }
 
         const indicator = isFlipped ? voiceIndicatorBack : voiceIndicatorFront;
-        
+
         utterance.onstart = () => {
           if (indicator) indicator.style.display = 'inline-flex';
         };
@@ -1172,7 +1238,7 @@
       const item = activeDeck[currentIndex];
       questionNumEl.textContent = currentIndex + 1;
       currentIdxTextEl.textContent = currentIndex + 1;
-      
+
       // Hiển thị câu hỏi tiếng Anh và bản dịch tiếng Việt
       questionTextEl.textContent = item.q;
       questionTranslationEl.textContent = item.q_vn || 'Chưa có bản dịch cho câu hỏi này';
@@ -1434,4 +1500,5 @@
     loadQuestions();
   </script>
 </body>
+
 </html>
