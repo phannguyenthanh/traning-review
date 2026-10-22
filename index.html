@@ -157,6 +157,58 @@
       background: rgba(56, 189, 248, 0.1);
     }
 
+    /* VOICE PICKER & SPEED SELECTOR */
+    .voice-picker-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0 10px;
+      height: 38px;
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+    }
+
+    .voice-picker-container:hover, .voice-picker-container:focus-within {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent-cyan);
+    }
+
+    .voice-dropdown {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      max-width: 140px;
+      text-overflow: ellipsis;
+    }
+
+    .voice-dropdown option {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 6px;
+    }
+
+    .speed-btn {
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      width: 42px;
+    }
+
+    .speed-btn:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
     /* MODE SELECTOR & STATUS BAR */
     .sub-bar {
       display: flex;
@@ -605,6 +657,22 @@
       </div>
 
       <div class="header-actions">
+        <!-- Voice Selector Dropdown (Smart Voice Ranking) -->
+        <div class="voice-picker-container" title="Chọn giọng đọc tiếng Anh hay nhất trên máy">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <select id="voiceSelect" class="voice-dropdown" aria-label="Chọn giọng đọc"></select>
+        </div>
+
+        <!-- Speech Speed Toggle -->
+        <button id="btnSpeedToggle" class="icon-btn speed-btn" title="Đổi tốc độ đọc: 0.85x - 0.95x - 1.05x" aria-label="Tốc độ đọc">
+          <span id="speedLabel">0.95x</span>
+        </button>
+
         <!-- Replay Voice Button -->
         <button id="btnReplay" class="icon-btn" title="Nghe lại câu hiện tại (Phím R)" aria-label="Replay speech">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -873,6 +941,26 @@
     const btnModePractice = document.getElementById('btnModePractice');
     const btnModeBrowse = document.getElementById('btnModeBrowse');
 
+    const voiceSelectEl = document.getElementById('voiceSelect');
+    const btnSpeedToggle = document.getElementById('btnSpeedToggle');
+    const speedLabel = document.getElementById('speedLabel');
+
+    const SPEED_OPTIONS = [0.85, 0.95, 1.05];
+    let currentSpeedIndex = 1; // 0.95x mặc định (tự nhiên nhất cho phỏng vấn)
+    let currentSpeechRate = 0.95;
+
+    // Đọc cài đặt tốc độ đã lưu
+    const savedSpeed = localStorage.getItem('devflash_speech_rate');
+    if (savedSpeed) {
+      const parsedSpeed = parseFloat(savedSpeed);
+      const foundIdx = SPEED_OPTIONS.indexOf(parsedSpeed);
+      if (foundIdx !== -1) {
+        currentSpeedIndex = foundIdx;
+        currentSpeechRate = parsedSpeed;
+      }
+    }
+    if (speedLabel) speedLabel.textContent = currentSpeechRate + 'x';
+
     // 1. DATA INITIALIZATION & LOADING
     async function loadQuestions() {
       try {
@@ -912,30 +1000,126 @@
       return array;
     }
 
-    // 2. SPEECH SYNTHESIS ENGINE (Web Speech API)
+    // 2. SMART SPEECH SYNTHESIS ENGINE (Web Speech API)
+    // Tính điểm chất lượng giọng: Ưu tiên Natural, Neural, Google, Siri, Samantha Enhanced
+    function calculateVoiceQualityScore(voice) {
+      let score = 0;
+      const name = voice.name.toLowerCase();
+      const lang = voice.lang.toLowerCase();
+
+      // Chỉ chấp nhận giọng tiếng Anh
+      if (lang === 'en-us') score += 25;
+      else if (lang === 'en-gb') score += 20;
+      else if (lang.startsWith('en')) score += 15;
+      else return -999;
+
+      // Nhận diện các dòng giọng AI/Cloud/Natural cao cấp
+      if (name.includes('natural')) score += 80;
+      if (name.includes('neural')) score += 75;
+      if (name.includes('google')) score += 70;
+      if (name.includes('enhanced')) score += 65;
+      if (name.includes('premium')) score += 60;
+      if (name.includes('siri')) score += 55;
+      if (name.includes('ava') || name.includes('samantha')) score += 40;
+      if (name.includes('daniel') || name.includes('oliver') || name.includes('allison') || name.includes('tom')) score += 30;
+
+      return score;
+    }
+
     function initSpeechSynthesis() {
       if (!('speechSynthesis' in window)) {
         console.warn('Speech synthesis not supported by browser.');
+        if (voiceSelectEl) voiceSelectEl.innerHTML = '<option>Không hỗ trợ TTS</option>';
         return;
       }
 
-      function selectVoice() {
-        const voices = window.speechSynthesis.getVoices();
-        if (!voices || voices.length === 0) return;
+      function populateVoices() {
+        const allVoices = window.speechSynthesis.getVoices();
+        if (!allVoices || allVoices.length === 0) return;
 
-        // Ưu tiên các giọng tiếng Anh tự nhiên chất lượng cao hoặc local
-        englishVoice = voices.find(v => (v.lang === 'en-US' || v.lang === 'en-GB') && (v.localService || v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Siri')))
-                    || voices.find(v => v.lang.startsWith('en'))
-                    || voices[0];
+        // Lọc các giọng tiếng Anh và xếp hạng từ hay nhất đến cơ bản
+        const englishVoices = allVoices
+          .map(v => ({ voice: v, score: calculateVoiceQualityScore(v) }))
+          .filter(item => item.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .map(item => item.voice);
+
+        if (englishVoices.length === 0) return;
+
+        // Điền vào dropdown
+        voiceSelectEl.innerHTML = '';
+        const savedVoiceName = localStorage.getItem('devflash_voice_name');
+        let matchedSavedVoice = null;
+
+        englishVoices.forEach((v) => {
+          const option = document.createElement('option');
+          option.value = v.name;
+          
+          // Gắn nhãn icon đẹp mắt cho giọng AI/Natural
+          let label = v.name.replace(/Microsoft |Google /g, '');
+          if (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Enhanced') || v.name.includes('Neural')) {
+            label = '✨ ' + label;
+          } else {
+            label = '🗣 ' + label;
+          }
+          option.textContent = `${label} (${v.lang})`;
+
+          if (savedVoiceName && v.name === savedVoiceName) {
+            matchedSavedVoice = v;
+            option.selected = true;
+          }
+          voiceSelectEl.appendChild(option);
+        });
+
+        // Thiết lập giọng được chọn: nếu đã lưu thì lấy, không thì lấy giọng điểm cao nhất (đầu danh sách)
+        if (matchedSavedVoice) {
+          englishVoice = matchedSavedVoice;
+        } else {
+          englishVoice = englishVoices[0];
+          voiceSelectEl.selectedIndex = 0;
+        }
       }
 
-      selectVoice();
+      populateVoices();
       if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = selectVoice;
+        window.speechSynthesis.onvoiceschanged = populateVoices;
+      }
+
+      // Xử lý khi người dùng đổi giọng trong dropdown
+      if (voiceSelectEl) {
+        voiceSelectEl.addEventListener('change', (e) => {
+          const selectedName = e.target.value;
+          const allVoices = window.speechSynthesis.getVoices();
+          const found = allVoices.find(v => v.name === selectedName);
+          if (found) {
+            englishVoice = found;
+            localStorage.setItem('devflash_voice_name', found.name);
+            // Phát âm thử câu hiện tại bằng giọng mới để người dùng trải nghiệm
+            if (activeDeck && activeDeck[currentIndex]) {
+              const textToSpeak = isFlipped ? activeDeck[currentIndex].a : activeDeck[currentIndex].q;
+              speakText(textToSpeak);
+            }
+          }
+        });
+      }
+
+      // Xử lý đổi tốc độ đọc
+      if (btnSpeedToggle) {
+        btnSpeedToggle.addEventListener('click', () => {
+          currentSpeedIndex = (currentSpeedIndex + 1) % SPEED_OPTIONS.length;
+          currentSpeechRate = SPEED_OPTIONS[currentSpeedIndex];
+          speedLabel.textContent = currentSpeechRate + 'x';
+          localStorage.setItem('devflash_speech_rate', currentSpeechRate);
+          // Đọc lại với tốc độ mới
+          if (activeDeck && activeDeck[currentIndex]) {
+            const textToSpeak = isFlipped ? activeDeck[currentIndex].a : activeDeck[currentIndex].q;
+            speakText(textToSpeak);
+          }
+        });
       }
     }
 
-    // Đọc văn bản bằng giọng tiếng Anh với Promise khi kết thúc (chỉ đọc tiếng Anh chuẩn)
+    // Đọc văn bản bằng giọng tiếng Anh chuẩn, tự nhiên với Promise khi kết thúc
     function speakText(text) {
       return new Promise((resolve) => {
         if (!isSoundEnabled || !('speechSynthesis' in window)) {
@@ -946,8 +1130,8 @@
         window.speechSynthesis.cancel(); // Hủy mọi lời nói trước đó
 
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.95; // Tốc độ tự nhiên, rõ ràng cho luyện phỏng vấn
+        utterance.lang = englishVoice ? englishVoice.lang : 'en-US';
+        utterance.rate = currentSpeechRate; // Tốc độ người dùng chọn (mặc định 0.95x)
         utterance.pitch = 1.0;
 
         if (englishVoice) {
