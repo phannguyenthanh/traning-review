@@ -876,67 +876,77 @@
      * Built with Vanilla JavaScript
      */
 
-    // Dữ liệu dự phòng (Fallback) đầy đủ bản dịch khi mở offline trực tiếp file:// không có HTTP Server
+    // Dữ liệu dự phòng (Fallback) phỏng vấn Kỹ sư MES / Hệ thống công nghiệp
     const FALLBACK_QUESTIONS = [
       {
-        "q": "What is the Virtual DOM and how does React use it to optimize rendering?",
-        "q_vn": "Virtual DOM là gì và React sử dụng nó như thế nào để tối ưu hoá việc render?",
-        "a": "A lightweight JavaScript representation of the real DOM. React uses reconciliation and diffing algorithms to batch and update only modified nodes.",
-        "a_vn": "Bản sao JavaScript rút gọn của DOM thật. React dùng thuật toán reconciliation và diffing để gom nhóm và chỉ cập nhật những node bị thay đổi."
+        "q": "Can you introduce yourself and highlight your core technical skills?",
+        "q_vn": "Bạn có thể giới thiệu bản thân và nêu bật các kỹ năng kỹ thuật cốt lõi không?",
+        "a": "5 years experience. PHP, Nodejs, Docker. Optimize system.",
+        "a_vn": "5 năm kinh nghiệm. Thế mạnh PHP, NodeJS, Docker. Chuyên tối ưu hóa hệ thống.",
+        "hint": "5 năm kinh nghiệm. Thế mạnh PHP, NodeJS, Docker. Chuyên tối ưu hóa hệ thống."
       },
       {
-        "q": "Explain the difference between synchronous and asynchronous JavaScript.",
-        "q_vn": "Giải thích sự khác biệt giữa xử lý đồng bộ (synchronous) và bất đồng bộ (asynchronous) trong JavaScript.",
-        "a": "Synchronous code executes sequentially and blocks execution. Asynchronous code runs via the Event Loop (Promises, async/await, Web APIs) without blocking the main thread.",
-        "a_vn": "Mã đồng bộ chạy tuần tự từng dòng và chặn luồng thực thi. Mã bất đồng bộ chạy qua Event Loop (Promises, async/await, Web APIs) mà không làm tắc nghẽn luồng chính."
+        "q": "Why do you want to switch from web software to factory MES systems?",
+        "q_vn": "Tại sao bạn muốn chuyển từ phần mềm web sang làm hệ thống MES cho nhà máy?",
+        "a": "Love industrial automation. Fast real-time data. High business impact.",
+        "a_vn": "Đam mê tự động hóa công nghiệp. Xử lý dữ liệu thời gian thực. Tạo giá trị thực tế cao.",
+        "hint": "Đam mê tự động hóa công nghiệp. Xử lý dữ liệu thời gian thực. Tạo giá trị thực tế cao."
       },
       {
-        "q": "What is a Closure in JavaScript and what is a practical use case?",
-        "q_vn": "Closure trong JavaScript là gì và hãy nêu một trường hợp ứng dụng thực tế?",
-        "a": "A function bundled with references to its lexical scope. Used for data privacy, currying, memoization, and maintaining state in factory functions.",
-        "a_vn": "Một hàm đi kèm với tham chiếu đến phạm vi từ vựng (lexical scope) của nó. Dùng để tạo biến private, currying, memoization và lưu giữ trạng thái trong factory functions."
+        "q": "Factory systems generate huge amounts of data. How do you optimize MySQL and PostgreSQL?",
+        "q_vn": "Hệ thống nhà máy tạo ra lượng dữ liệu rất lớn. Bạn tối ưu hóa MySQL và PostgreSQL như thế nào?",
+        "a": "Index optimization. Partitioning tables. Fast query caching.",
+        "a_vn": "Đánh chỉ mục thông minh. Phân vùng bảng dữ liệu lớn. Tối ưu bộ nhớ đệm truy vấn.",
+        "hint": "Đánh chỉ mục thông minh. Phân vùng bảng dữ liệu lớn. Tối ưu bộ nhớ đệm truy vấn."
       },
       {
-        "q": "How does CSS Flexbox differ from CSS Grid?",
-        "q_vn": "CSS Flexbox khác biệt như thế nào so với CSS Grid?",
-        "a": "Flexbox is one-dimensional (content-first, rows OR columns). Grid is two-dimensional (layout-first, rows AND columns simultaneously).",
-        "a_vn": "Flexbox là một chiều (dựa theo nội dung, sắp xếp theo hàng HOẶC cột). Grid là hai chiều (dựa theo khung layout, điều khiển cả hàng VÀ cột cùng lúc)."
+        "q": "MES requires communicating with machines and sensors. How do you use C# and Python for this?",
+        "q_vn": "Hệ thống MES cần giao tiếp với máy móc và cảm biến. Bạn dùng C# và Python như thế nào?",
+        "a": "C-sharp for equipment communication. Python for data processing. RESTful APIs.",
+        "a_vn": "Dùng C# giao tiếp thiết bị phần cứng. Python xử lý dữ liệu. Kết nối qua RESTful API.",
+        "hint": "Dùng C# giao tiếp thiết bị phần cứng. Python xử lý dữ liệu. Kết nối qua RESTful API."
       },
       {
-        "q": "What is the purpose of the HTTP status code 401 vs 403?",
-        "q_vn": "Ý nghĩa và sự khác nhau giữa mã trạng thái HTTP 401 và 403 là gì?",
-        "a": "401 Unauthorized means unauthenticated (identity unknown). 403 Forbidden means authenticated but lacking permissions to access the resource.",
-        "a_vn": "401 Unauthorized nghĩa là chưa xác thực danh tính (chưa đăng nhập). 403 Forbidden nghĩa là đã xác thực nhưng không đủ quyền truy cập tài nguyên."
+        "q": "Factory lines cannot stop. How do you ensure high availability and prevent downtime?",
+        "q_vn": "Dây chuyền sản xuất không được phép dừng. Bạn làm thế nào để đảm bảo hệ thống hoạt động liên tục 24/7?",
+        "a": "Docker containerization. Error logging. Quick rollback backup.",
+        "a_vn": "Đóng gói Docker ổn định. Giám sát ghi log lỗi liên tục. Sao lưu và khôi phục sự cố tức thì.",
+        "hint": "Đóng gói Docker ổn định. Giám sát ghi log lỗi liên tục. Sao lưu và khôi phục sự cố tức thì."
       },
       {
-        "q": "What are Web Vitals and why are LCP, FID/INP, and CLS important?",
-        "q_vn": "Web Vitals là gì và tại sao các chỉ số LCP, FID/INP và CLS lại quan trọng?",
-        "a": "Google metrics for user experience. LCP measures loading speed, INP measures interactivity responsiveness, CLS measures visual stability.",
-        "a_vn": "Bộ chỉ số của Google đo lường trải nghiệm người dùng. LCP đo tốc độ tải trang, INP đo độ phản hồi tương tác, CLS đo độ ổn định thị giác (tránh giật cục layout)."
+        "q": "Operators need real-time production dashboards. How do you build them?",
+        "q_vn": "Người vận hành cần bảng điều khiển theo dõi sản xuất thời gian thực. Bạn xây dựng như thế nào?",
+        "a": "Nodejs WebSockets. Vuejs responsive UI. Instant live updates.",
+        "a_vn": "Dùng NodeJS WebSocket truyền dữ liệu tức thì. VueJS làm giao diện trực quan và cập nhật liên tục.",
+        "hint": "Dùng NodeJS WebSocket truyền dữ liệu tức thì. VueJS làm giao diện trực quan và cập nhật liên tục."
       },
       {
-        "q": "Explain the concept of Event Bubbling and Event Capturing.",
-        "q_vn": "Giải thích khái niệm Event Bubbling (nổi bọt) và Event Capturing (bắt sự kiện).",
-        "a": "Capturing travels down from Window to the target element. Bubbling travels up from target to Window. event.stopPropagation() halts traversal.",
-        "a_vn": "Capturing truyền sự kiện từ Window đi xuống element mục tiêu. Bubbling lan tỏa ngược từ element mục tiêu lên Window. event.stopPropagation() sẽ dừng việc lan tỏa."
+        "q": "You have experience with AI workflow automation. How can you apply AI to our factory?",
+        "q_vn": "Bạn có kinh nghiệm tự động hóa tích hợp AI. Bạn có thể ứng dụng AI vào nhà máy của chúng tôi ra sao?",
+        "a": "Predictive machine maintenance. Automated defect detection. Smart reports.",
+        "a_vn": "Dự đoán bảo trì máy móc trước khi hỏng. Tự động nhận diện lỗi sản phẩm. Báo cáo số liệu thông minh.",
+        "hint": "Dự đoán bảo trì máy móc trước khi hỏng. Tự động nhận diện lỗi sản phẩm. Báo cáo số liệu thông minh."
       },
       {
-        "q": "What is the difference between SQL and NoSQL databases?",
-        "q_vn": "Sự khác biệt giữa cơ sở dữ liệu SQL (quan hệ) và NoSQL (phi quan hệ) là gì?",
-        "a": "SQL databases are relational, structured with rigid schemas and ACID compliance. NoSQL databases are non-relational, schema-flexible, and horizontally scalable.",
-        "a_vn": "SQL là cơ sở dữ liệu có cấu trúc quan hệ, lược đồ chặt chẽ và tuân thủ ACID. NoSQL là phi quan hệ, cấu trúc linh hoạt và dễ dàng mở rộng theo chiều ngang."
+        "q": "How do you integrate our MES with existing ERP and warehouse systems?",
+        "q_vn": "Làm thế nào để bạn tích hợp hệ thống MES với phần mềm ERP và hệ thống kho hiện có?",
+        "a": "RESTful APIs. Message queue sync. Ensure data consistency.",
+        "a_vn": "Thiết kế RESTful API chuẩn. Dùng hàng đợi đồng bộ dữ liệu. Đảm bảo dữ liệu không bị sai lệch.",
+        "hint": "Thiết kế RESTful API chuẩn. Dùng hàng đợi đồng bộ dữ liệu. Đảm bảo dữ liệu không bị sai lệch."
       },
       {
-        "q": "What is Memoization and when should you use it in frontend apps?",
-        "q_vn": "Memoization là gì và khi nào nên áp dụng nó trong ứng dụng Frontend?",
-        "a": "Caching function results based on inputs. Useful for expensive calculations or preventing unnecessary re-renders in component trees.",
-        "a_vn": "Kỹ thuật lưu trữ tạm kết quả của hàm dựa trên tham số đầu vào. Hữu ích cho các phép tính toán tốn kém hoặc ngăn chặn component con bị re-render không cần thiết."
+        "q": "If production data is corrupted during a live shift, how do you handle it?",
+        "q_vn": "Nếu dữ liệu sản xuất bị lỗi trong ca làm việc trực tiếp, bạn xử lý như thế nào?",
+        "a": "Check server logs. Isolate faulty service. Restore database backup.",
+        "a_vn": "Kiểm tra log máy chủ ngay. Cô lập dịch vụ bị lỗi để xưởng chạy tiếp. Khôi phục dữ liệu từ bản sao lưu.",
+        "hint": "Kiểm tra log máy chủ ngay. Cô lập dịch vụ bị lỗi để xưởng chạy tiếp. Khôi phục dữ liệu từ bản sao lưu."
       },
       {
-        "q": "How does HTTPS secure communication between client and server?",
-        "q_vn": "Giao thức HTTPS bảo mật đường truyền giữa client và server như thế nào?",
-        "a": "Using TLS/SSL encryption with public-private key cryptography for handshake and symmetric keys for data transmission, ensuring privacy and integrity.",
-        "a_vn": "Sử dụng mã hóa TLS/SSL với khóa bất đối xứng (public/private key) cho bước bắt tay (handshake) và khóa đối xứng để truyền dữ liệu, đảm bảo tính riêng tư và toàn vẹn."
+        "q": "Manufacturing has specific workflows. Are you confident in learning factory operations quickly?",
+        "q_vn": "Sản xuất có quy trình đặc thù. Bạn có tự tin học nhanh nghiệp vụ nhà máy không?",
+        "a": "Fast learner. Strong system logic. Ready on shop floor.",
+        "a_vn": "Khả năng tự học nhanh. Tư duy logic hệ thống vững. Sẵn sàng xuống trực tiếp xưởng sản xuất để nắm bắt nghiệp vụ.",
+        "hint": "Khả năng tự học nhanh. Tư duy logic hệ thống vững. Sẵn sàng xuống trực tiếp xưởng sản xuất để nắm bắt nghiệp vụ."
       }
     ];
 
@@ -1260,9 +1270,9 @@
       questionTextEl.textContent = item.q;
       questionTranslationEl.textContent = item.q_vn || 'Chưa có bản dịch cho câu hỏi này';
 
-      // Hiển thị câu trả lời tiếng Anh và bản dịch tiếng Việt
+      // Hiển thị câu trả lời tiếng Anh và bản dịch/gợi ý tiếng Việt
       answerTextEl.textContent = item.a;
-      answerTranslationEl.textContent = item.a_vn || 'Chưa có giải nghĩa cho câu trả lời này';
+      answerTranslationEl.textContent = item.hint || item.a_vn || 'Chưa có gợi ý giải nghĩa cho câu trả lời này';
 
       // Update progress bar
       const progressPercent = ((currentIndex + 1) / activeDeck.length) * 100;
