@@ -3,105 +3,90 @@
     "q": "Can you introduce yourself and highlight your core technical skills?",
     "q_vn": "Bạn có thể giới thiệu bản thân và nêu bật các kỹ năng kỹ thuật cốt lõi không?",
     "a": "I'm Thanh, a web developer with 5 years of experience specializing in PHP, Laravel, Node.js, and Python. I have strong experience in system optimization, database tuning, and automated workflows.",
-    "a_vn": "Tôi là Thanh, lập trình viên web với 5 năm kinh nghiệm chuyên về PHP, Laravel, Node.js và Python. Tôi có thế mạnh về tối ưu hệ thống, cơ sở dữ liệu và tự động hóa quy trình.",
-    "hint": "5 năm kinh nghiệm. Thế mạnh PHP, Laravel, Node.js, Python. Tối ưu hệ thống và tự động hóa."
+    "a_vn": "Tôi là Thanh, lập trình viên web với 5 năm kinh nghiệm chuyên về PHP, Laravel, Node.js và Python. Tôi có thế mạnh về tối ưu hệ thống, cơ sở dữ liệu và tự động hóa quy trình."
   },
   {
     "q": "Why do you want to work in an industrial park environment like ours?",
     "q_vn": "Tại sao bạn lại muốn làm việc trong môi trường khu công nghiệp như chúng tôi?",
     "a": "I want to apply my backend and computer vision skills to solve real-world factory operational challenges and support large-scale production systems.",
-    "a_vn": "Tôi muốn áp dụng kỹ năng backend và xử lý ảnh vào thực tế sản xuất, giải quyết bài toán vận hành và hỗ trợ hệ thống quy mô lớn.",
-    "hint": "Áp dụng kỹ năng backend, AI/vision vào thực tế sản xuất của nhà máy."
+    "a_vn": "Tôi muốn áp dụng kỹ năng backend và xử lý ảnh vào thực tế sản xuất, giải quyết bài toán vận hành và hỗ trợ hệ thống quy mô lớn."
   },
   {
     "q": "Do you have experience with MES or Manufacturing Execution Systems?",
     "q_vn": "Bạn có kinh nghiệm gì với hệ thống điều hành sản xuất MES không?",
     "a": "I have a solid foundation in backend architecture, database management, and internal software workflows. I can quickly learn and adapt to MES/SFCS logic.",
-    "a_vn": "Tôi có nền tảng vững chắc về kiến trúc backend, quản lý cơ sở dữ liệu và quy trình phần mềm nội bộ. Tôi có thể nhanh chóng nắm bắt và thích ứng với logic của MES/SFCS.",
-    "hint": "Nền tảng backend, database vững chắc; nhanh chóng làm quen logic MES/SFCS."
+    "a_vn": "Tôi có nền tảng vững chắc về kiến trúc backend, quản lý cơ sở dữ liệu và quy trình phần mềm nội bộ. Tôi có thể nhanh chóng nắm bắt và thích ứng với logic của MES/SFCS."
   },
   {
     "q": "How do you handle high database loads and query optimization?",
     "q_vn": "Bạn xử lý tải cơ sở dữ liệu cao và tối ưu hóa truy vấn như thế nào?",
     "a": "I optimize queries by indexing properly, using caching strategies with Redis, avoiding N+1 problems, and configuring database locking correctly.",
-    "a_vn": "Tôi tối ưu truy vấn bằng cách đánh index phù hợp, dùng cache Redis, tránh lỗi N+1 và cấu hình lock cơ sở dữ liệu hợp lý.",
-    "hint": "Đánh index, dùng Redis cache, khắc phục N+1, cấu hình lock DB."
+    "a_vn": "Tôi tối ưu truy vấn bằng cách đánh index phù hợp, dùng cache Redis, tránh lỗi N+1 và cấu hình lock cơ sở dữ liệu hợp lý."
   },
   {
     "q": "How do you approach automating internal production or data workflows?",
     "q_vn": "Phương pháp của bạn khi tự động hóa quy trình sản xuất hoặc dữ liệu nội bộ là gì?",
     "a": "I break down manual steps, write Python or Node.js scripts for image processing or data extraction, and deploy CI/CD pipelines for continuous updates.",
-    "a_vn": "Tôi chia nhỏ các bước thủ công, viết script Python/Node.js để xử lý dữ liệu hoặc hình ảnh, và dùng CI/CD để triển khai tự động.",
-    "hint": "Chia nhỏ quy trình thủ công, viết script Python/Node.js, dùng CI/CD."
+    "a_vn": "Tôi chia nhỏ các bước thủ công, viết script Python/Node.js để xử lý dữ liệu hoặc hình ảnh, và dùng CI/CD để triển khai tự động."
   },
   {
     "q": "What is your process for deploying software updates to remote servers?",
     "q_vn": "Quy trình triển khai cập nhật phần mềm lên máy chủ từ xa của bạn là gì?",
     "a": "I use Docker containers and GitLab CI/CD pipelines to build, test, and deploy applications smoothly without disrupting active services.",
-    "a_vn": "Tôi dùng Docker container và quy trình GitLab CI/CD để build, test và deploy ứng dụng mượt mà, hạn chế gián đoạn dịch vụ.",
-    "hint": "Dùng Docker và GitLab CI/CD để đóng gói và triển khai tự động."
+    "a_vn": "Tôi dùng Docker container và quy trình GitLab CI/CD để build, test và deploy ứng dụng mượt mà, hạn chế gián đoạn dịch vụ."
   },
   {
     "q": "How do you manage hardware resources like GPU and RAM for local automated processing?",
     "q_vn": "Bạn quản lý tài nguyên phần cứng như GPU và RAM cho hệ thống xử lý tự động local như thế nào?",
     "a": "I allocate VRAM efficiently using lightweight models, optimize memory usage, and set up fallback mechanisms to prevent server crashes.",
-    "a_vn": "Tôi phân bổ VRAM hiệu quả bằng cách tối ưu mô hình, quản lý bộ nhớ RAM chặt chẽ và thiết lập cơ chế dự phòng tránh sập máy.",
-    "hint": "Tối ưu VRAM, quản lý RAM, thiết lập cơ chế dự phòng tránh quá tải."
+    "a_vn": "Tôi phân bổ VRAM hiệu quả bằng cách tối ưu mô hình, quản lý bộ nhớ RAM chặt chẽ và thiết lập cơ chế dự phòng tránh sập máy."
   },
   {
     "q": "How do you ensure data integrity when multiple factory systems push data simultaneously?",
     "q_vn": "Bạn đảm bảo tính vẹn toàn dữ liệu như thế nào khi nhiều hệ thống nhà máy đẩy dữ liệu cùng lúc?",
     "a": "I use database transactions, row-level locking, and message queues to handle concurrent write requests safely.",
-    "a_vn": "Tôi sử dụng database transaction, khóa hàng (row-level locking) và hàng đợi tin nhắn (message queue) để xử lý ghi đồng thời an toàn.",
-    "hint": "Sử dụng Transaction, Row-level Locking và Message Queue."
+    "a_vn": "Tôi sử dụng database transaction, khóa hàng (row-level locking) và hàng đợi tin nhắn (message queue) để xử lý ghi đồng thời an toàn."
   },
   {
     "q": "Can you work with both Linux and Windows environments in a factory setup?",
     "q_vn": "Bạn có thể làm việc trên cả môi trường Linux và Windows trong nhà máy không?",
     "a": "Yes, I regularly work across Ubuntu servers, macOS, and Windows environments, configuring cross-platform deployment pipelines.",
-    "a_vn": "Có, tôi thường xuyên làm việc trên server Ubuntu, macOS và Windows, cấu hình pipeline triển khai đa nền tảng.",
-    "hint": "Thành thạo server Ubuntu, macOS và Windows, cấu hình pipeline đa nền tảng."
+    "a_vn": "Có, tôi thường xuyên làm việc trên server Ubuntu, macOS và Windows, cấu hình pipeline triển khai đa nền tảng."
   },
   {
     "q": "Are you comfortable communicating in English with foreign engineers or managers?",
     "q_vn": "Bạn có thoải mái khi giao tiếp bằng tiếng Anh với kỹ sư hoặc quản lý người nước ngoài không?",
     "a": "I can read technical documents, write clear reports, and communicate directly for daily work and task coordination.",
-    "a_vn": "Tôi đọc hiểu tài liệu kỹ thuật, viết báo cáo rõ ràng và có thể giao tiếp trực tiếp để trao đổi công việc hàng ngày.",
-    "hint": "Đọc tài liệu, viết báo cáo tốt và giao tiếp công việc hàng ngày bằng tiếng Anh."
+    "a_vn": "Tôi đọc hiểu tài liệu kỹ thuật, viết báo cáo rõ ràng và có thể giao tiếp trực tiếp để trao đổi công việc hàng ngày."
   },
   {
     "q": "How do you debug an issue when a production pipeline stops working unexpectedly?",
     "q_vn": "Bạn xử lý sự cố như thế nào khi hệ thống đang vận hành bị dừng đột ngột?",
     "a": "I check system logs, isolate the failing service, replicate the bug locally, apply a quick fix, and implement tests to prevent recurrence.",
-    "a_vn": "Tôi kiểm tra log hệ thống, cô lập dịch vụ lỗi, tái hiện lỗi ở môi trường local, sửa nhanh và thêm test để tránh tái diễn.",
-    "hint": "Check log, cô lập dịch vụ lỗi, fix local và viết test phòng ngừa."
+    "a_vn": "Tôi kiểm tra log hệ thống, cô lập dịch vụ lỗi, tái hiện lỗi ở môi trường local, sửa nhanh và thêm test để tránh tái diễn."
   },
   {
     "q": "Have you ever integrated third-party APIs or external hardware devices into your backend?",
     "q_vn": "Bạn đã từng tích hợp API của bên thứ ba hoặc thiết bị phần cứng vào backend chưa?",
     "a": "Yes, I have integrated various REST APIs, webhooks, and local hardware tools via Python scripts and Node.js microservices.",
-    "a_vn": "Rồi, tôi đã tích hợp nhiều REST API, webhook và thiết bị phần cứng local thông qua script Python và microservices Node.js.",
-    "hint": "Tích hợp REST API, Webhook, phần cứng local qua Python/Node.js."
+    "a_vn": "Rồi, tôi đã tích hợp nhiều REST API, webhook và thiết bị phần cứng local thông qua script Python và microservices Node.js."
   },
   {
     "q": "How do you prioritize tasks when faced with tight deadlines from factory operations?",
     "q_vn": "Bạn ưu tiên công việc như thế nào khi gặp thời hạn gấp từ bộ phận vận hành nhà máy?",
     "a": "I categorize tasks by urgency and impact, focus first on critical system stability, and communicate clearly about delivery timelines.",
-    "a_vn": "Tôi phân loại theo độ khẩn cấp và mức độ ảnh hưởng, ưu tiên ổn định hệ thống cốt lõi trước và trao đổi rõ ràng về tiến độ.",
-    "hint": "Ưu tiên độ khẩn cấp/ảnh hưởng, tập trung tính ổn định hệ thống trước."
+    "a_vn": "Tôi phân loại theo độ khẩn cấp và mức độ ảnh hưởng, ưu tiên ổn định hệ thống cốt lõi trước và trao đổi rõ ràng về tiến độ."
   },
   {
     "q": "Are you ready to support emergency system fixes outside regular working hours if needed?",
     "q_vn": "Bạn có sẵn sàng hỗ trợ xử lý sự cố hệ thống ngoài giờ làm việc khi cần thiết không?",
     "a": "Yes, I understand that factory systems require high availability, so I am ready to support emergency fixes when necessary.",
-    "a_vn": "Có, tôi hiểu hệ thống nhà máy cần hoạt động liên tục nên tôi sẵn sàng hỗ trợ xử lý sự cố khẩn cấp khi có yêu cầu.",
-    "hint": "Sẵn sàng hỗ trợ vì hiểu hệ thống nhà máy cần độ sẵn sàng cao."
+    "a_vn": "Có, tôi hiểu hệ thống nhà máy cần hoạt động liên tục nên tôi sẵn sàng hỗ trợ xử lý sự cố khẩn cấp khi có yêu cầu."
   },
   {
     "q": "Where do you see yourself in the next 2 to 3 years within our company?",
     "q_vn": "Bạn thấy bản thân ở vị trí nào trong 2 đến 3 năm tới tại công ty chúng tôi?",
     "a": "I want to become a Senior Engineer specializing in factory software automation, leading key IT initiatives to optimize production efficiency.",
-    "a_vn": "Tôi muốn trở thành Kỹ sư Senior chuyên về tự động hóa phần mềm nhà máy, dẫn dắt các dự án IT trọng điểm để tối ưu hiệu suất sản xuất.",
-    "hint": "Trở thành Senior Engineer về tự động hóa phần mềm nhà máy, làm chủ các hệ thống IT cốt lõi."
+    "a_vn": "Tôi muốn trở thành Kỹ sư Senior chuyên về tự động hóa phần mềm nhà máy, dẫn dắt các dự án IT trọng điểm để tối ưu hiệu suất sản xuất."
   }
 ]
