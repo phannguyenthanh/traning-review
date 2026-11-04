@@ -209,7 +209,7 @@
 
     .deck-tabs {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       background: rgba(15, 23, 42, 0.7);
       padding: 5px;
@@ -848,6 +848,13 @@
           <span class="deck-tab-info">
             <span class="deck-tab-name">Tình huống ngoại lệ</span>
             <span class="deck-tab-count" id="badgeException">5 câu</span>
+          </span>
+        </button>
+        <button id="btnDeckGemtek" class="deck-tab" data-deck="gemtek" role="tab" aria-selected="false" title="Câu hỏi phỏng vấn Gemtek">
+          <span class="deck-tab-icon">🌐</span>
+          <span class="deck-tab-info">
+            <span class="deck-tab-name">Phỏng vấn Gemtek</span>
+            <span class="deck-tab-count" id="badgeGemtek">7 câu</span>
           </span>
         </button>
       </div>
