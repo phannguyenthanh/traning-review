@@ -1173,6 +1173,13 @@
         icon: '⚡',
         file: './exception.json',
         fallback: FALLBACK_EXCEPTION_QUESTIONS
+      },
+      gemtek: {
+        id: 'gemtek',
+        name: 'Phỏng vấn Gemtek',
+        icon: '🌐',
+        file: './gemtek.json',
+        fallback: []
       }
     };
 
@@ -1193,8 +1200,10 @@
     // DOM Elements
     const btnDeckMes = document.getElementById('btnDeckMes');
     const btnDeckException = document.getElementById('btnDeckException');
+    const btnDeckGemtek = document.getElementById('btnDeckGemtek');
     const badgeMes = document.getElementById('badgeMes');
     const badgeException = document.getElementById('badgeException');
+    const badgeGemtek = document.getElementById('badgeGemtek');
 
     const flashcardEl = document.getElementById('flashcard');
     const questionTextEl = document.getElementById('questionText');
@@ -1248,8 +1257,10 @@
       // Cập nhật trạng thái active của các tab deck
       btnDeckMes.classList.toggle('active', deckId === 'mes');
       btnDeckException.classList.toggle('active', deckId === 'exception');
+      if (btnDeckGemtek) btnDeckGemtek.classList.toggle('active', deckId === 'gemtek');
       btnDeckMes.setAttribute('aria-selected', deckId === 'mes');
       btnDeckException.setAttribute('aria-selected', deckId === 'exception');
+      if (btnDeckGemtek) btnDeckGemtek.setAttribute('aria-selected', deckId === 'gemtek');
 
       if (isAutoplayRunning) stopAutoplay();
       cancelSpeech();
@@ -1279,6 +1290,8 @@
         badgeMes.textContent = `${rawQuestions.length} câu`;
       } else if (deckId === 'exception' && badgeException) {
         badgeException.textContent = `${rawQuestions.length} câu`;
+      } else if (deckId === 'gemtek' && badgeGemtek) {
+        badgeGemtek.textContent = `${rawQuestions.length} câu`;
       }
 
       // Khởi tạo activeDeck theo chế độ đang chọn (luyện tập hay thứ tự)
@@ -1818,6 +1831,12 @@
     if (btnDeckException) {
       btnDeckException.addEventListener('click', () => {
         if (currentDeckId !== 'exception') switchDeck('exception');
+      });
+    }
+
+    if (btnDeckGemtek) {
+      btnDeckGemtek.addEventListener('click', () => {
+        if (currentDeckId !== 'gemtek') switchDeck('gemtek');
       });
     }
 

@@ -1,0 +1,44 @@
+[
+  {
+    "q": "Tell me about yourself.",
+    "q_vn": "Bạn hãy giới thiệu bản thân đi.",
+    "a": "Hi, my name is Thanh. I have a degree in Information Technology and around a few years of experience working as a software developer, mainly focusing on backend development using PHP, Node.js, and Java. I'm very excited about this opportunity and happy to be here today. Thank you!",
+    "a_vn": "Xin chào, tôi tên là Thanh. Tôi có bằng Cử nhân Công nghệ Thông tin và vài năm kinh nghiệm làm lập trình viên phần mềm, tập trung chính vào mảng backend sử dụng PHP, Node.js và Java. Tôi rất hào hứng với cơ hội lần này và rất vui được có mặt ở đây hôm nay. Cảm ơn các bạn!"
+  },
+  {
+    "q": "Are you married?",
+    "q_vn": "Bạn đã lấy vợ chưa?",
+    "a": "No, I am not married yet. Currently, I'm focusing on my career and personal growth.",
+    "a_vn": "Chưa, tôi chưa kết hôn. Hiện tại tôi đang tập trung vào sự nghiệp và phát triển bản thân."
+  },
+  {
+    "q": "What are your strengths?",
+    "q_vn": "Điểm mạnh của bạn là gì?",
+    "a": "I am a self-motivated person and a fast learner. I always stay focused to finish my work on time and I enjoy solving difficult problems.",
+    "a_vn": "Tôi là người chủ động và học nhanh. Tôi luôn tập trung hoàn thành công việc đúng hạn và thích giải quyết các vấn đề khó."
+  },
+  {
+    "q": "What is your biggest weakness?",
+    "q_vn": "Điểm yếu lớn nhất của bạn là gì?",
+    "a": "Sometimes I spend too much time checking details to make sure everything is perfect. To fix this, I learn to manage my time better and prioritize tasks.",
+    "a_vn": "Thỉnh thoảng tôi mất quá nhiều thời gian kiểm tra chi tiết để mọi thứ hoàn hảo. Để cải thiện, tôi đang học cách quản lý thời gian tốt hơn và sắp xếp công việc theo thứ tự ưu tiên."
+  },
+  {
+    "q": "Why do you want to work here?",
+    "q_vn": "Tại sao bạn muốn làm việc ở đây?",
+    "a": "I know your company has a great working environment and strong tech team. I believe this is a good place for me to grow my career and contribute my skills.",
+    "a_vn": "Tôi biết công ty mình có môi trường làm việc tuyệt vời và đội ngũ kỹ thuật mạnh. Tôi tin đây là nơi tốt để tôi phát triển sự nghiệp và đóng góp kỹ năng của mình."
+  },
+  {
+    "q": "How do you handle pressure at work?",
+    "q_vn": "Bạn xử lý áp lực công việc như thế nào?",
+    "a": "When facing high pressure, I break big tasks into smaller ones, stay calm, and focus on solving them one by one.",
+    "a_vn": "Khi gặp áp lực cao, tôi chia nhỏ các nhiệm vụ, giữ bình tĩnh và tập trung giải quyết từng việc một."
+  },
+  {
+    "q": "Where do you see yourself in 3 to 5 years?",
+    "q_vn": "Bạn thấy bản thân ở đâu trong 3 đến 5 năm tới?",
+    "a": "In 3 to 5 years, I want to become a Senior Developer with strong technical skills and be able to support junior team members.",
+    "a_vn": "Trong 3 đến 5 năm tới, tôi muốn trở thành Lập trình viên cấp cao có kỹ thuật giỏi và có thể hỗ trợ các thành viên mới trong đội ngũ."
+  }
+]
