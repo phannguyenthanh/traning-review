@@ -1,44 +1,62 @@
 [
   {
-    "q": "Tell me about yourself.",
-    "q_vn": "Bạn hãy giới thiệu bản thân đi.",
-    "a": "Hi, my name is Thanh. I have a degree in Information Technology and around a few years of experience working as a software developer, mainly focusing on backend development using PHP, Node.js, and Java. I'm very excited about this opportunity and happy to be here today. Thank you!",
+    "q": "Tell me about yourself!",
+    "q_vn": "Hãy nói cho tôi biết về bản thân bạn!",
+    "a": "Hi, my name is Thanh, and I am 25 years old. I have a degree in Information Technology and around a few years of experience working as a software developer, mainly focusing on backend development using PHP, Node.js, and Java. I'm very excited about this opportunity and happy to be here today. Thank you!",
     "a_vn": "Xin chào, tôi tên là Thanh. Tôi có bằng Cử nhân Công nghệ Thông tin và vài năm kinh nghiệm làm lập trình viên phần mềm, tập trung chính vào mảng backend sử dụng PHP, Node.js và Java. Tôi rất hào hứng với cơ hội lần này và rất vui được có mặt ở đây hôm nay. Cảm ơn các bạn!"
   },
   {
-    "q": "Are you married?",
-    "q_vn": "Bạn đã lấy vợ chưa?",
-    "a": "No, I am not married yet. Currently, I'm focusing on my career and personal growth.",
-    "a_vn": "Chưa, tôi chưa kết hôn. Hiện tại tôi đang tập trung vào sự nghiệp và phát triển bản thân."
+    "q": "What is your biggest strength/weakness?",
+    "q_vn": "Những điểm mạnh/điểm yếu của bạn là gì?",
+    "a": "My strength is that I am hard-working, highly focused on completing tasks, and quick to catch on to new problems. On the other hand, my weakness is that I sometimes overthink, which can make me a bit slow in decision-making.",
+    "a_vn": "Điểm mạnh của tôi là chăm chỉ, tập trung cao độ để hoàn thành công việc và nắm bắt vấn đề nhanh. Mặt khác, điểm yếu của tôi là đôi khi suy nghĩ quá nhiều, điều này có thể làm tôi ra quyết định hơi chậm một chút."
   },
   {
-    "q": "What are your strengths?",
-    "q_vn": "Điểm mạnh của bạn là gì?",
-    "a": "I am a self-motivated person and a fast learner. I always stay focused to finish my work on time and I enjoy solving difficult problems.",
-    "a_vn": "Tôi là người chủ động và học nhanh. Tôi luôn tập trung hoàn thành công việc đúng hạn và thích giải quyết các vấn đề khó."
+    "q": "Why do you want this job?",
+    "q_vn": "Tại sao bạn lại muốn công việc này?",
+    "a": "I want this job because it matches my skills in backend development, and I see great opportunities to grow my career here.",
+    "a_vn": "Tôi muốn công việc này vì nó phù hợp với kỹ năng mảng backend của tôi, và tôi thấy cơ hội lớn để phát triển sự nghiệp tại đây."
   },
   {
-    "q": "What is your biggest weakness?",
-    "q_vn": "Điểm yếu lớn nhất của bạn là gì?",
-    "a": "Sometimes I spend too much time checking details to make sure everything is perfect. To fix this, I learn to manage my time better and prioritize tasks.",
-    "a_vn": "Thỉnh thoảng tôi mất quá nhiều thời gian kiểm tra chi tiết để mọi thứ hoàn hảo. Để cải thiện, tôi đang học cách quản lý thời gian tốt hơn và sắp xếp công việc theo thứ tự ưu tiên."
+    "q": "Why did you leave your last job?",
+    "q_vn": "Tại sao bạn lại bỏ công việc cũ?",
+    "a": "I left my last job to look for new technical challenges and better career development opportunities.",
+    "a_vn": "Tôi nghỉ công việc cũ để tìm kiếm những thử thách kỹ thuật mới và cơ hội phát triển sự nghiệp tốt hơn."
   },
   {
-    "q": "Why do you want to work here?",
-    "q_vn": "Tại sao bạn muốn làm việc ở đây?",
-    "a": "I know your company has a great working environment and strong tech team. I believe this is a good place for me to grow my career and contribute my skills.",
-    "a_vn": "Tôi biết công ty mình có môi trường làm việc tuyệt vời và đội ngũ kỹ thuật mạnh. Tôi tin đây là nơi tốt để tôi phát triển sự nghiệp và đóng góp kỹ năng của mình."
+    "q": "What do you know about our company?",
+    "q_vn": "Bạn biết gì về công ty của chúng tôi?",
+    "a": "I know that your company has a strong technical team, a professional working environment, and is growing steadily in the industry.",
+    "a_vn": "Tôi biết công ty mình có đội ngũ kỹ thuật mạnh, môi trường làm việc chuyên nghiệp và đang phát triển rất vững chắc trong ngành."
   },
   {
-    "q": "How do you handle pressure at work?",
-    "q_vn": "Bạn xử lý áp lực công việc như thế nào?",
-    "a": "When facing high pressure, I break big tasks into smaller ones, stay calm, and focus on solving them one by one.",
-    "a_vn": "Khi gặp áp lực cao, tôi chia nhỏ các nhiệm vụ, giữ bình tĩnh và tập trung giải quyết từng việc một."
+    "q": "Tell us about your education!",
+    "q_vn": "Hãy nói tôi biết thêm về việc học của bạn.",
+    "a": "I graduated with a degree in Information Technology, where I gained fundamental knowledge in programming, databases, and software design.",
+    "a_vn": "Tôi tốt nghiệp chuyên ngành Công nghệ Thông tin, nơi tôi tích lũy được nền tảng kiến thức về lập trình, cơ sở dữ liệu và thiết kế phần mềm."
   },
   {
-    "q": "Where do you see yourself in 3 to 5 years?",
-    "q_vn": "Bạn thấy bản thân ở đâu trong 3 đến 5 năm tới?",
-    "a": "In 3 to 5 years, I want to become a Senior Developer with strong technical skills and be able to support junior team members.",
-    "a_vn": "Trong 3 đến 5 năm tới, tôi muốn trở thành Lập trình viên cấp cao có kỹ thuật giỏi và có thể hỗ trợ các thành viên mới trong đội ngũ."
+    "q": "What are your short term goals?",
+    "q_vn": "Các mục tiêu ngắn hạn của bạn là gì?",
+    "a": "My short-term goal is to quickly adapt to the new team, improve my skills, and complete assigned tasks effectively.",
+    "a_vn": "Mục tiêu ngắn hạn của tôi là nhanh chóng hòa nhập với đội ngũ mới, nâng cao kỹ năng và hoàn thành tốt các nhiệm vụ được giao."
+  },
+  {
+    "q": "What are your long term goals?",
+    "q_vn": "Các mục tiêu dài hạn của bạn là gì?",
+    "a": "In the long term, I want to become a Senior Software Developer with strong expertise and support junior members in the team.",
+    "a_vn": "Về dài hạn, tôi muốn trở thành Lập trình viên phần mềm cấp cao có chuyên môn vững vàng và hỗ trợ các thành viên mới trong team."
+  },
+  {
+    "q": "Do you work well under pressure?",
+    "q_vn": "Bạn có thể làm việc dưới áp lực không?",
+    "a": "Yes, I can. When working under pressure, I stay calm, break tasks into smaller steps, and prioritize my work.",
+    "a_vn": "Có, tôi làm được. Khi làm việc dưới áp lực, tôi giữ bình tĩnh, chia nhỏ công việc và sắp xếp theo thứ tự ưu tiên."
+  },
+  {
+    "q": "Why should I hire you?",
+    "q_vn": "Tại sao chúng tôi nên tuyển dụng bạn?",
+    "a": "You should hire me because I have relevant backend experience, a strong work ethic, and a passion for learning new technologies to contribute to your team.",
+    "a_vn": "Bạn nên tuyển dụng tôi vì tôi có kinh nghiệm làm backend phù hợp, tinh thần làm việc tốt và niềm đam mê học hỏi công nghệ mới để đóng góp cho team."
   }
 ]
