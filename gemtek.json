@@ -2,20 +2,20 @@
   {
     "q": "Tell me about yourself!",
     "q_vn": "Hãy nói cho tôi biết về bản thân bạn!",
-    "a": "Hi, my name is Thanh, and I am 25 years old. I have a degree in Information Technology and around a few years of experience working as a software developer, mainly focusing on backend development using PHP, Node.js, and Java. I'm very excited about this opportunity and happy to be here today. Thank you!",
+    "a": "Hi, my name is Thanh, and I am 25 years old. I have a degree in Information Technology from University of Technology and Management. i have 5 years of experience working as a software developer, mainly focusing on backend development using PHP, Node.js, and Java. I'm very excited about this opportunity and happy to be here today. Thank you!",
     "a_vn": "Xin chào, tôi tên là Thanh. Tôi có bằng Cử nhân Công nghệ Thông tin và vài năm kinh nghiệm làm lập trình viên phần mềm, tập trung chính vào mảng backend sử dụng PHP, Node.js và Java. Tôi rất hào hứng với cơ hội lần này và rất vui được có mặt ở đây hôm nay. Cảm ơn các bạn!"
   },
   {
     "q": "What is your biggest strength/weakness?",
     "q_vn": "Những điểm mạnh/điểm yếu của bạn là gì?",
-    "a": "My strength is that I am hard-working, highly focused on completing tasks, and quick to catch on to new problems. On the other hand, my weakness is that I sometimes overthink, which can make me a bit slow in decision-making.",
-    "a_vn": "Điểm mạnh của tôi là chăm chỉ, tập trung cao độ để hoàn thành công việc và nắm bắt vấn đề nhanh. Mặt khác, điểm yếu của tôi là đôi khi suy nghĩ quá nhiều, điều này có thể làm tôi ra quyết định hơi chậm một chút."
+    "a": "My strength is that I am hard-working, highly focused on completing tasks, and quick to catch on to new problems. On the other hand, my weakness is that I sometimes overthink, so I make decisions slowly.",
+    "a_vn": "Điểm mạnh của tôi là chăm chỉ, tập trung cao độ để hoàn thành công việc và nắm bắt vấn đề nhanh. Mặt khác, điểm yếu của tôi là đôi khi suy nghĩ quá nhiều, nên tôi ra quyết định hơi chậm một chút."
   },
   {
     "q": "Why do you want this job?",
     "q_vn": "Tại sao bạn lại muốn công việc này?",
-    "a": "I want this job because it matches my skills in backend development, and I see great opportunities to grow my career here.",
-    "a_vn": "Tôi muốn công việc này vì nó phù hợp với kỹ năng mảng backend của tôi, và tôi thấy cơ hội lớn để phát triển sự nghiệp tại đây."
+    "a": "I want this job because it matches my skills in backend development, and I see great chances to build my future here.",
+    "a_vn": "Tôi muốn có công việc này vì nó phù hợp với các kỹ năng của tôi trong lĩnh vực phát triển backend, và tôi thấy có nhiều cơ hội tuyệt vời để xây dựng tương lai của mình tại đây."
   },
   {
     "q": "Why did you leave your last job?",
@@ -50,13 +50,13 @@
   {
     "q": "Do you work well under pressure?",
     "q_vn": "Bạn có thể làm việc dưới áp lực không?",
-    "a": "Yes, I can. When working under pressure, I stay calm, break tasks into smaller steps, and prioritize my work.",
-    "a_vn": "Có, tôi làm được. Khi làm việc dưới áp lực, tôi giữ bình tĩnh, chia nhỏ công việc và sắp xếp theo thứ tự ưu tiên."
+    "a": "Yes, I can. When working under pressure, I stay calm, break tasks into smaller steps, and organize my work.",
+    "a_vn": "Có, tôi làm được. Khi làm việc dưới áp lực, tôi giữ bình tĩnh, chia nhỏ công việc và sắp xếp lại công việc."
   },
   {
     "q": "Why should I hire you?",
     "q_vn": "Tại sao chúng tôi nên tuyển dụng bạn?",
-    "a": "You should hire me because I have relevant backend experience, a strong work ethic, and a passion for learning new technologies to contribute to your team.",
-    "a_vn": "Bạn nên tuyển dụng tôi vì tôi có kinh nghiệm làm backend phù hợp, tinh thần làm việc tốt và niềm đam mê học hỏi công nghệ mới để đóng góp cho team."
+    "a": "You should hire me because I have good backend skills, a good attitude, and I love learning new things to help your team.",
+    "a_vn": "Bạn nên tuyển dụng tôi vì tôi có kỹ năng backend tốt, thái độ làm việc tốt và thích học hỏi những điều mới để hỗ trợ team."
   }
 ]
