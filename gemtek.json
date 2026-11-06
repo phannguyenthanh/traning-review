@@ -58,5 +58,17 @@
     "q_vn": "Tại sao chúng tôi nên tuyển dụng bạn?",
     "a": "You should hire me because I have good backend skills, I work hard, and I love learning new things to help your team.",
     "a_vn": "Bạn nên tuyển dụng tôi vì tôi có kỹ năng backend tốt, làm việc chăm chỉ và thích học hỏi những điều mới để hỗ trợ team."
+  },
+  {
+    "q": "Do you prefer to work alone or on a team?",
+    "q_vn": "Bạn thích làm việc một mình hay theo nhóm hơn?",
+    "a": "I can work well both alone and in a team. Working alone helps me focus on coding, while working in a team helps me learn and build better systems.",
+    "a_vn": "Tôi có thể làm việc tốt cả độc lập lẫn theo nhóm. Làm việc độc lập giúp tôi tập trung viết code, còn làm việc nhóm giúp tôi học hỏi và xây dựng hệ thống tốt hơn."
+  },
+  {
+    "q": "Can you tell me about your experience?",
+    "q_vn": "Bạn có thể chia sẻ về kinh nghiệm làm việc của bạn không?",
+    "a": "I have several years of experience as a backend developer. I have worked on building web applications, designing databases, and creating APIs using PHP, Node.js, and Java.",
+    "a_vn": "Tôi có vài năm kinh nghiệm làm lập trình viên backend. Tôi đã từng tham gia xây dựng các ứng dụng web, thiết kế cơ sở dữ liệu và phát triển API bằng PHP, Node.js và Java."
   }
 ]
