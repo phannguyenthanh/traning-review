@@ -70,5 +70,11 @@
     "q_vn": "Bạn có thể chia sẻ về kinh nghiệm làm việc của bạn không?",
     "a": "I have several years of experience as a backend developer. I have worked on building web applications, designing databases, and creating APIs using PHP, Node.js, and Java.",
     "a_vn": "Tôi có vài năm kinh nghiệm làm lập trình viên backend. Tôi đã từng tham gia xây dựng các ứng dụng web, thiết kế cơ sở dữ liệu và phát triển API bằng PHP, Node.js và Java."
+  },
+  {
+    "q": "Do you have any questions for us?",
+    "q_vn": "Bạn có câu hỏi nào cho chúng tôi không?",
+    "a": "Yes, I do. Can you tell me more about the main projects I will be working on if I join your team?",
+    "a_vn": "Có, tôi có. Bạn có thể chia sẻ thêm về các dự án chính mà tôi sẽ đảm nhận nếu gia nhập team của mình không?"
   }
 ]
