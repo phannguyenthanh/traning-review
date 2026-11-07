@@ -33,5 +33,11 @@
         "a": "Just to clarify, are you asking about...?",
         "a_vn": "Để làm rõ hơn, có phải anh/chị đang hỏi về... đúng không?",
         "hint": "Dùng để xác nhận lại trọng tâm câu hỏi trước khi trả lời."
+    },
+    {
+        "q": "Sorry, my English is a bit limited. Can we speak in Vietnamese, please?",
+        "q_vn": "Xin lỗi, tiếng Anh của tôi hơi hạn chế. Chúng ta có thể trao đổi bằng tiếng Việt được không?",
+        "a": "Sorry, my English is a bit limited. Can we speak in Vietnamese, please?",
+        "a_vn": "Xin lỗi, tiếng Anh của tôi hơi hạn chế. Chúng ta có thể trao đổi bằng tiếng Việt được không?"
     }
 ]
