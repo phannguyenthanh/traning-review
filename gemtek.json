@@ -76,5 +76,35 @@
     "q_vn": "Bạn có câu hỏi nào cho chúng tôi không?",
     "a": "Yes, I do. Can you tell me more about the main projects I will be working on if I join your team?",
     "a_vn": "Có, tôi có. Bạn có thể chia sẻ thêm về các dự án chính mà tôi sẽ đảm nhận nếu gia nhập team của mình không?"
+  },
+  {
+    "q": "What programming language do you like best?",
+    "q_vn": "Bạn thích ngôn ngữ lập trình nào nhất?",
+    "a": "I like PHP and Node.js best because I have worked with them the most and feel most confident writing clean code with them.",
+    "a_vn": "Tôi thích PHP và Node.js nhất vì tôi làm việc với chúng nhiều nhất và tự tin viết code sạch bằng chúng."
+  },
+  {
+    "q": "How do you handle bugs in your code?",
+    "q_vn": "Bạn xử lý lỗi trong code của mình như thế nào?",
+    "a": "I check the error logs, find the root cause, fix it carefully, and test it again to make sure it works.",
+    "a_vn": "Tôi kiểm tra log lỗi, tìm nguyên nhân gốc rễ, sửa cẩn thận và test lại để chắc chắn nó chạy ổn định."
+  },
+  {
+    "q": "How do you handle a mistake at work?",
+    "q_vn": "Bạn xử lý thế nào khi mắc lỗi trong công việc?",
+    "a": "I admit the mistake immediately, report it to my manager, and focus on fixing it as fast as possible.",
+    "a_vn": "Tôi nhận lỗi ngay lập tức, báo cáo với quản lý và tập trung khắc phục nhanh nhất có thể."
+  },
+  {
+    "q": "How do you learn new technology?",
+    "q_vn": "Bạn học công nghệ mới bằng cách nào?",
+    "a": "I learn by reading technical blogs, watching video tutorials, and practicing with small projects.",
+    "a_vn": "Tôi học qua việc đọc các blog kỹ thuật, xem video hướng dẫn và thực hành với các dự án nhỏ."
+  },
+  {
+    "q": "When can you start working?",
+    "q_vn": "Khi nào bạn có thể bắt đầu làm việc?",
+    "a": "I can start working immediately.",
+    "a_vn": "Tôi có thể bắt đầu làm việc ngay."
   }
 ]
